@@ -1,0 +1,17 @@
+#lang racket
+
+; f as a recursive process
+
+(define (frec n)
+  (if (< n 3)
+      n
+      (+ (frec (- n 1))
+         (* 2 (frec (- n 2)))
+         (* 3 (frec (- n 3))))))
+
+(frec 3)
+(frec 4)
+(frec 5)
+(frec 6)
+(frec 7)
+  

@@ -1,0 +1,23 @@
+#lang racket
+
+(define (cubic-sqrt x)
+  (cubic-sqrt-iter 1.0 x))
+
+(define (sqrt-iter guess x)
+  (if (good-enough? guess x)
+      guess
+      (sqrt-iter (improve guess x) x)))
+
+(define (improve guess x)
+  (approx guess (/ x guess)))
+
+(define (approx x y) 
+  (/
+   (+
+    (/ x
+       (* y y))
+    (* 2 y))
+   3))
+
+(define (good-enough? guess x)
+  (< (abs (- (* guess guess guess) x)) 0.001))

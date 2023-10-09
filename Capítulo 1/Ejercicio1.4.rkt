@@ -1,0 +1,12 @@
+#lang racket
+
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+
+(a-plus-abs-b 2 2) ; 4
+(a-plus-abs-b 2 -2) ; 4
+
+; The objective is to add the absolute value of b to a.
+; Then, if b>0, the operator + is used with a and b.
+; If b<=0, it is used the operator -, placed as the alternative clause in the conditional if, resulting in the substraction of a negative value, i.e., the addition of a positive value.
+; The goal is achieved

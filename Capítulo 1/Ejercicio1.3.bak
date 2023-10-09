@@ -1,0 +1,5 @@
+#lang racket
+(define (procedure x y z)
+  (cond ((and (not (< x z)) (not (< y z))) (+ (* x x) (* y y)))
+        ((and (not (< x y)) (not (< z y))) (+ (* x x) (* z z)))
+        ((and (not (< y z)) (not (< x z))) (+ (* y y) (* z z))))

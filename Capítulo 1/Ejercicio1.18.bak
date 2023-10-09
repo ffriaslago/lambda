@@ -1,0 +1,17 @@
+#lang racket
+
+(define (fast-* a b)
+  (fast-*-iter 0 a b))
+
+(define (fast-*-iter aux a b)
+  (cond ((= b 1) aux)
+        ((even? b) (fast-*-iter (+ aux (double a)) a (halve b)))
+        (else (fast-*-iter (+ aux a) a (- b 1)))))
+
+(define (double a)
+  (* a 2))
+
+(define (halve a)
+  (/ a 2))
+
+(fast-* 3 5)
