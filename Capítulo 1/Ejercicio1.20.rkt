@@ -1,0 +1,85 @@
+#lang racket
+
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+(gcd 206 40)
+
+; Normal-order evaluation
+
+; (gcd 206 40)
+
+; (if (= 40 0)
+;    206
+;    (gcd 40 (remainder 206 40)))
+
+; (gcd 40 (remainder 206 40))
+
+; (if (= (remainder 206 40) 0) 
+;    40
+;    (gcd (remainder 206 40) (remainder 40 (remainder 206 40))))
+
+; (if (= 6 0) #1
+;    40
+;    (gcd (remainder 206 40) (remainder 40 (remainder 206 40))))
+
+; (gcd (remainder 206 40) (remainder 40 (remainder 206 40)))
+
+; (if (= (remainder 40 (remainder 206 40)) 0) 
+;    (remainder 206 40)
+;    (gcd (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))
+
+; (if (= (remainder 40 6) 0) #2
+;    (remainder 206 40)
+;    (gcd (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))
+
+; (if (= 4 0) #3
+;    (remainder 206 40)
+;    (gcd (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))
+
+; (gcd (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40))))
+
+;(if (= (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) 0)
+;    (remainder 40 (remainder 206 40))
+;    (gcd (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40))))))
+
+;(if (= 2 0) # 7
+;    (remainder 40 (remainder 206 40))
+;    (gcd (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40))))))
+
+; (gcd (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))
+
+;(if (= (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))) 0)
+;    (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))
+;    (gcd (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))) (remainder (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))))
+
+;(if (= 0 0) #14
+;    (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))
+;    (gcd (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))) (remainder (remainder (remainder 206 40) (remainder 40 (remainder 206 40))) (remainder (remainder 40 (remainder 206 40)) (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))))))
+
+; (remainder (remainder 206 40) (remainder 40 (remainder 206 40)))
+
+; 2 #18
+
+
+
+; Applicative-order evaluation
+; (gcd 206 40)
+; (= 40 0) #f
+; (gcd 40 (remainder 206 40)) (Now (remainder 206 40) has to be evaluated #1)
+; (gcd 40 6)
+; (= 6 0) #f (None expression is evaluated)
+; (gcd 6 (remainder 40 6)) (Now (remainder 40 6) has to be evaluated #2)
+; (gcd 6 4)
+; (= 4 0) #f (None expression is evaluated)
+; (gcd 4 (remainder 6 4)) (Now (remainder 6 4) has to be evaluated #3)
+; (gcd 4 2)
+; (= 2 0) #f (None expression is evaluated)
+; (gcd 2 (remainder 4 2)) (Now (remainder 4 2) has to be evaluated #4)
+; (gcd 2 0)
+; (= 0 0) #t
+; 2
+; Applicative-order -> 4 remainder operations
+
