@@ -1,0 +1,22 @@
+#lang racket
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder 
+          (square (expmod base (/ exp 2) m))
+          m))
+        (else
+         (remainder 
+          (* base (expmod base (- exp 1) m))
+          m))))
+
+(define (square x) (* x x))
+
+(define (carmichael n)
+  (cond ((= n 0) (newline) (display "All numbers checked"))
+        ((= (expmod n-1 n n) n-1) (carmichael n-1))
+        (else (newline) (display "Not a Carmichael number"))))
+        
+      
+  
