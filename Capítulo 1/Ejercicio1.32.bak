@@ -1,0 +1,26 @@
+#lang racket
+
+(define (sum term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+; sum as accumulate
+; combiner: ?
+; null-value: 0
+; term, a, next, b: the same
+
+(define (product term a next b)
+  (if (> a b)
+      1
+      (* (term a)
+         (product term (next a) next b))))
+
+; product as accumulate
+; combiner: ?
+; null-value: 1
+; term, a, next, b: the same
+
+(define (accumulate combiner null-value term a next b)
+  )
