@@ -1,0 +1,22 @@
+#lang racket
+
+; First, it is shown that phi=(1+sqrt(5))/2 is a fixed point of the transformation x->1+1/x
+
+; Let y be the fixed point of the transformation, lets solve the equation y=1+1/y
+
+; y=1+1/y --> y-1/y=1 --> y^2-1=y --> y*2-y-1=0 --> y=(1 +- sqrt(1+4))/2=(1 +- sqrt(5))/2
+
+(define tolerance 0.00001)
+
+(define (fixed-point f first-guess)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) 
+       tolerance))
+  (define (try guess)
+    (let ((next (f guess)))
+      (if (close-enough? guess next)
+          next
+          (try next))))
+  (try first-guess))
+
+(fixed-point (lambda (x) (+ 1 (/ 1 x))) 1.0) ; 1.61803278688524 Fine!
