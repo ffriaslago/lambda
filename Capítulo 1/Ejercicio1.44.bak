@@ -1,0 +1,8 @@
+#lang racket
+
+(define dx 0.00001)
+
+(define (smooth g)
+  (lambda (x)
+    (/ (+ (g (- x dx)) (g x) (g (+ x dx)))
+       3)))
