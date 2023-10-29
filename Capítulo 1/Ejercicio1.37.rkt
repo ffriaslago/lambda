@@ -1,11 +1,14 @@
 #lang racket
 
-; Recursive procedure. It is started with the term 1 and then built onwards
+; Recursive procedure. It was corrected after exercise 1.38 because it didn´t work with the Euler approximation because it was not built correctly
+; It needs an auxiliary procedure named rec to keep the calculation rightly. As in the iterative way, it is calculated reversely
 
-;(define (cont-frac n d k)
-;  (if (= k 1)
-;      (/ (n k) (d k))
-;      (/ (n k) (+ (d k) (cont-frac n d (- k 1))))))
+(define (cont-frac n d k)
+  (define (rec i)
+    (if (= i k)
+      (/ (n i) (d i))
+      (/ (n i) (+ (d i) (rec (+ i 1))))))
+  (rec 1))
 
 ; Iterative procedure. It is started with the term k and then built backwards
 
