@@ -27,7 +27,7 @@
   (try first-guess))
 
 (define (average x y)
-  (/ (* x y) 2))
+  (/ (+ x y) 2))
 
 (define (average-damp f)
   (lambda (x) (average x (f x))))
@@ -49,4 +49,40 @@
 ; n=3 -> times=1
 ; n=4 -> times=2
 
-(n-root-damped 2 4 3)
+; (n-root-damped 2 2 1) OK
+; (n-root-damped 2 3 1) OK
+; (n-root-damped 2 4 1) not OK
+; (n-root-damped 2 4 2) OK
+; ...
+; (n-root-damped 2 7 2) OK
+; (n-root-damped 2 8 2) not OK
+; (n-root-damped 2 8 3) OK
+; ...
+; (n-root-damped 2 15 3) OK
+; (n-root-damped 2 16 3) not OK
+; (n-root-damped 2 16 4) OK
+; ...
+; (n-root-damped 2 31 4) OK
+; (n-root-damped 2 32 4) not OK
+; (n-root-damped 2 32 5) OK
+
+;(n-root-damped 2 32 5)
+
+; So the pattern follows
+
+; n=2 -> 1 time
+; n=4 -> change -> 2 times
+; n=8 -> change -> 3 times
+; n=16 -> change -> 4 times
+; n=32 -> change -> 5 times
+
+; (log x y) procedure in Lisp returns the logarithm of x base y
+; (floor x) procedure in Lisp returns the integer part of x
+; the number of times the damping is needed for the nth root of a number would be (floor (log n 2))
+
+; The final procedure is an adaptation of the former one without the times argument, as now it is calculated inside the procedure depending on n
+
+(define (n-root x n)
+  (fixed-point ((repeated average-damp (floor (log n 2))) (lambda (y) (/ x (expt y (- n 1))))) 1.0))
+
+(n-root 2 4) ; Result: 1.189207115002721
