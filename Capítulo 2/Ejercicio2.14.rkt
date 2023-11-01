@@ -26,6 +26,9 @@
                  (+ (upper-bound x) 
                     (upper-bound y))))
 
+(define (sub-interval x y)
+  (add-interval x (make-interval (- (upper-bound y)) (- (lower-bound y)))))
+
 (define (mul-interval x y)
   (let ((p1 (* (lower-bound x) 
                (lower-bound y)))
@@ -61,6 +64,7 @@
 
 (define int1 (make-center-percent 40 0.05))
 (define int2 (make-center-percent 50 0.04))
+(define one (make-interval 1 1))
 
 ; Let's check if we get something different
 
@@ -76,7 +80,25 @@
 (percent (div-interval int1 int1)) ; 0.09975062344139651
 
 (center  (div-interval int1 int2)) ; 0.8028846153846154 it's correct up to some decimals
-(percent (div-interval int1 int2)) ; 0.08982035928143708 too
+(percent (div-interval int1 int2)) ; 0.08982035928143708 It adds the tolerances
+
+(center  (mul-interval int1 int2)) ; 2004.0
+(percent (mul-interval int1 int2)) ; 0.08982035928143713 It adds the tolerances
+
+; Multiplying and dividing add the percentages (as expected for small ones, see Exercise 2.13)
+
+(percent (div-interval one int1))  ; 0.05
+(percent (div-interval one int2))  ; 0.04
+
+; Reciprocal preserves percentages
+
+(center  (add-interval int1 int2)) ; 90
+(percent (add-interval int1 int2)) ; 0.044 (more or less the average)
+
+(center  (sub-interval int1 int2)) ; -10 
+(percent (sub-interval int1 int2)) ; -0.4 (very high comparing to the former ones)
+
+; Lowering tolerances
 
 (define int3 (make-center-percent 40 0.025))
 (define int4 (make-center-percent 50 0.001))
@@ -87,6 +109,6 @@
 (center  (div-interval int3 int4)) ; 0.8000208000208
 (percent (div-interval int3 int4)) ; 0.025999350016249596
 
-; Dividing adds the percentages (as expected for small ones, see Exercise 2.13)
-
+(center  (sub-interval int3 int4)) ; -10 
+(percent (sub-interval int3 int4)) ; -0.105 (very high comparing to the former ones)
 
