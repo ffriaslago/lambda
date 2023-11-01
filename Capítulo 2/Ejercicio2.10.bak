@@ -1,0 +1,9 @@
+#lang racket
+
+(define (width interval) (/ (- (upper-bound interval) (lower-bound interval)) 2))
+
+(define (div-interval x y)
+  (mul-interval x 
+                (make-interval 
+                 (/ 1.0 (upper-bound y)) 
+                 (/ 1.0 (lower-bound y)))))

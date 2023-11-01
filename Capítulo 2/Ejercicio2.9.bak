@@ -1,0 +1,9 @@
+#lang racket
+
+(define (make-interval a b) (cons a b))
+
+(define (upper-bound interval) (cdr interval))
+
+(define (lower-bound interval) (car interval))
+
+(define (width interval) (/ (- (upper-bound interval) (lower-bound interval)) 2))
