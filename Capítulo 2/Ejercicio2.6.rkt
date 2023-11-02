@@ -12,7 +12,7 @@
 
 ; (lambda (f) (lambda (x) (f (((lambda (f) (lambda (x) x)) f) x))))
 
- With (((lambda (f) (lambda (x) x)) f) x) -> ((lambda (x) x) x) -> x
+; With (((lambda (f) (lambda (x) x)) f) x) -> ((lambda (x) x) x) -> x
 
 ; Leaving (lambda (f) (lambda (x) (f x)))
 
