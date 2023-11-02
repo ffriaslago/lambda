@@ -1,0 +1,9 @@
+#lang racket
+
+(define (reverse l)
+  (let ((f (cdr l)))
+  (if (null? f) 
+      (last-pairv2 f))))
+
+
+(reverse (list 1 4 9 16 25))
