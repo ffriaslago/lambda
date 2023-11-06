@@ -1,0 +1,3 @@
+#lang racket
+
+(define (square-tree tree) (tree-map square tree))

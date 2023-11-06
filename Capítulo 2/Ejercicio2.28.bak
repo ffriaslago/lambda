@@ -1,0 +1,11 @@
+#lang racket
+
+(define x (list (list 1 2) (list 3 4)))
+
+;(define (fringe l)
+;  (if (null? l)
+;        empty
+;        (if (not (pair? (car l)))
+;            (append (car l) (fringe (cdr l)))
+            
+  
