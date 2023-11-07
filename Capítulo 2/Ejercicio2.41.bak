@@ -1,0 +1,27 @@
+#lang racket
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (accumulate op 
+                      initial 
+                      (cdr sequence)))))
+
+(define (enumerate-interval low high)
+  (if (> low high)
+      empty
+      (cons low 
+            (enumerate-interval 
+             (+ low 1) 
+             high))))
+
+(define (unique-triples n) ; Sequence of triples (i,j,k) with 1<=k<j<i<=n
+  (accumulate append
+            empty
+            ; arguments of map, a procedure and a list. The procedure is the lambda function and the list is (enumerate-interval 1 n)
+            (map (lambda (i) 
+                   (map (lambda (j) 
+                          (list i j))
+                        (enumerate-interval 1 (- i 1)))) ; For every i, enumerate the integers j<i and create a pair (list i j)
+                 (enumerate-interval 1 n))))
