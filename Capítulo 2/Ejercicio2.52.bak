@@ -1,0 +1,48 @@
+#lang racket
+
+;
+; Section a)
+;
+
+; Interior legs
+(def s1 (make-segment (make-vect 0.4 0.0) (make-vect 0.5 0.3)))
+(def s2 (make-segment (make-vect 0.6 0.0) (make-vect 0.5 0.5)))
+
+;Exterior legs
+(def s3 (make-segment (make-vect 0.25 0.0) (make-vect 0.35 0.55)))
+(def s4 (make-segment (make-vect 0.75 0.5) (make-vect 0.60 0.50)))
+
+;Head
+(def s5 (make-segment (make-vect 0.35 0.85) (make-vect 0.40 1.00)))
+(def s6 (make-segment (make-vect 0.40 0.70) (make-vect 0.35 0.85)))
+(def s7 (make-segment (make-vect 0.65 0.85) (make-vect 0.60 1.00)))
+(def s8 (make-segment (make-vect 0.60 0.70) (make-vect 0.65 0.85)))
+
+;Right arm
+(def s9 (make-segment (make-vect 0.60 0.50) (make-vect 1 0.2)))
+(def s10 (make-segment (make-vect 0.60 0.70) (make-vect 0.75 0.70)))
+(def s11 (make-segment (make-vect 0.75 0.70) (make-vect 1 0.4)))
+
+;Left arm
+(def s12 (make-segment (make-vect 0.35 0.55) (make-vect 0.30 0.65)))
+(def s13 (make-segment (make-vect 0.40 0.70) (make-vect 0.30 0.70)))
+(def s14 (make-segment (make-vect 0.30 0.65) (make-vect 0.15 0.45)))
+(def s15 (make-segment (make-vect 0.30 0.70) (make-vect 0.15 0.65)))
+(def s16 (make-segment (make-vect 0.15 0.45) (make-vect 0 0.70)))
+(def s17 (make-segment (make-vect 0.15 0.65) (make-vect 0 0.85)))
+
+;Face
+;Smile
+(def s18 (make-segment (make-vect 0.40 0.85) (make-vect 0.45 0.80)))
+(def s19 (make-segment (make-vect 0.45 0.80) (make-vect 0.55 0.80)))
+(def s20 (make-segment (make-vect 0.55 0.80) (make-vect 0.60 0.85)))
+;Nose
+(def s21 (make-segment (make-vect 0.50 0.85) (make-vect 0.50 0.90)))
+;Eyes
+(def s22 (make-segment (make-vect 0.15 0.45) (make-vect 0 0.70)))
+(def s23 (make-segment (make-vect 0.15 0.65) (make-vect 0 0.85)))
+
+(def seglist (list s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17))
+
+; Solution
+(segments->painter seglist)
