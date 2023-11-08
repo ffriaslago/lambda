@@ -1,0 +1,11 @@
+#lang racket
+
+; One way to idenfity whether one element is a symbol or not is if it returns #f to pair?
+
+(define (equal? a b)
+  (if (and (not (pair? a)) (not (pair? b))) ; if a is a symbol, (pair? a) will return #f. Same with (pair? b). So, if a and b are symbols, this will return #t
+      (eq? a b)
+      ; if not, they are lists, division in car and cdr
+      (and (equal? (car a) (car b)) (equal? (cdr a) (cdr b)))))
+
+

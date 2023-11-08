@@ -1,0 +1,11 @@
+#lang racket
+
+(car ''abracadabra) ; 'quote
+
+; From the book, footnote 34, (quote (a b c))='(a b c)
+
+; It can be rewritten as (car (quote (quote abracadabra))) or (car '(quote abracadabra))
+
+(car (quote (quote abracadabra)))
+
+; first quote is understood as a procedure 
