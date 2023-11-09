@@ -1,0 +1,4 @@
+#lang racket
+
+; Allowing duplications
+; Set {1, 2, 3} represented with the list (2 3 2 1 3 2 2)
