@@ -1,0 +1,16 @@
+#lang racket
+
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
+(define (encode-symbol symbol tree)
+  (if (not (leaf? tree))
+      (let ((left-symbols (symbols (left-branch tree)))
+            (right-symbols (symbols (right-branch tree))))
+        (cond ((element-of-set? symbol left-symbols) (append (list 0) (encode-symbol symbol (left-branch tree))))
+              ((element-of-set? symbol right-symbols) (append (list 1) (encode-symbol symbol (right-branch tree))))
+              (else (error "Symbol is not in the tree at all" symbol))))              
+      '()))
