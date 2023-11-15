@@ -1,0 +1,30 @@
+#lang racket
+
+;
+; Section A
+;
+
+; Assuming that there already exists a get-record method for each division.
+; So there exists a table indexed by division name and the operation procedure.
+; Each of those procedures has one argument, an identification for the employee
+
+(define (get-record division employee-id)
+  ((get division 'record) employee-id))
+
+;
+; Section B
+;
+
+; Same reasoning as in Section A, but now the get-record procedure has been implemented, so it can be used its return
+
+(define (get-salary division record)
+  ((get division 'salary) record))
+
+;
+; Section C
+;
+
+(define (find-employee-record employee-id division-list) 
+   (cond ((null? division-list) '())
+         ((not (null? (get-record (car division-list) employee-name))) (get-record (car division-list) employee-name))
+         (else (find-employee-record employee-name (cdr division-list)))))
