@@ -1,0 +1,17 @@
+#lang racket
+
+; General definition
+
+(define (raise x) (apply-generic 'raise x))
+
+; From integer to rational
+
+(put 'raise '(integer) (lambda (x) (make-rational x 1)))
+
+; From rational to real
+
+(put 'raise '(rational) (lambda (x) (make-rational x 1)))
+
+; From real to complex
+
+(put 'raise '(real) (lambda (x) (make-complex-from-real-imag x 0)))
