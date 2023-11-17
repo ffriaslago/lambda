@@ -1,0 +1,16 @@
+#lang racket
+
+(define (make-monitored proc)
+  (define (dispatch m)
+    (cond ((eq? m 'how-many-calls) counter)
+          ((eq? m 'reset-count) counter=0)
+          (else (begin proc
+                       counter++)))))
+
+(define s (make-monitored sqrt))
+
+(s 100)
+
+(s 'how-many-calls)
+
+  
