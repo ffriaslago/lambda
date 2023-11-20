@@ -1,0 +1,10 @@
+#lang racket
+
+(define f
+  (let ((initial-value 0))
+  (lambda (amount)
+    (if (= amount 0)
+        (set! initial-value (+ initial-value 1))
+        (set! initial-value 0)))))
+
+(+ (f 0) (f 1))
