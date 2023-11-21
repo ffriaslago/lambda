@@ -1,0 +1,27 @@
+#lang sicp
+
+(define (make-queue)
+  (let ((front-ptr '(a b c))
+        (rear-ptr  '(c)))
+    (define (set-front-ptr! q item) (set-car! q item))
+    (define (set-rear-ptr! q item) (set-cdr! q item))
+    (define (empty-queue) q) (null? (front-ptr q))    
+    (define (dispatch m)
+      (cond ((eq? m 'front-queue) (car (front-ptr)))
+            ((eq? m 'insert-queue!) (let ((new-pair (cons-item '())))
+                                      (cond ((empty-queue? queue)
+                                             (set-front-ptr! queue new-pair)
+                                             (set-rear-ptr! queue new-pair)
+                                             queue)
+                                            (else (set-cdr! (rear-ptr queue) 
+                                                            new-pair)
+                                                  (set-rear-ptr! queue new-pair)
+                                                  queue))))
+            ((eq? m 'delete-queue!) (cond ((empty-queue? queue)
+                                           (error "DELETE! called with an empty queue" queue))
+                                          (else (set-front-ptr! 
+                                                 queue 
+                                                 (cdr (front-ptr queue)))
+                                                queue)))))            
+                                  
+            dispatch))
