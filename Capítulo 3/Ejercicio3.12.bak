@@ -1,0 +1,10 @@
+#lang racket
+
+(define (append! x y)
+  (mcdr (last-pair x) y)
+  x)
+
+(define (last-pair x)
+  (if (null? (cdr x))
+      x
+      (last-pair (cdr x))))

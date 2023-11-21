@@ -1,0 +1,19 @@
+#lang sicp
+
+(define (count-pairs lst)
+  (let ((tracker '()))
+    (define (uncounted? pair)
+      (if (memq pair tracker)
+          0
+          (begin
+            (set! tracker (cons tracker pair))
+            1)))
+    (define (counter x)      
+      (if (not (pair? x))
+          0
+          (+ (counter (car x))
+             (counter (cdr x))
+             (uncounted? x))))
+    (counter lst)))
+                      
+      

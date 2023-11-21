@@ -1,0 +1,31 @@
+#lang sicp
+
+(define (cycle? x) 
+  (let ((initial-list x))
+    (define (iter y) 
+      (cond ((eq? y initial-list) #t) 
+            ((null? y) #f) 
+            (else (iter (cdr y))))) 
+    (if (null? x) 
+        #f 
+        (iter (cdr x)))))
+
+(define (iter y) 
+  (cond ((eq? y initial-list) #t) 
+        ((null? y) #f) 
+        (else (iter (cdr y))))) 
+
+(define (make-cycle x)
+  (set-cdr! (last-pair x) x)
+  x)
+
+(define (last-pair x)
+  (if (null? (cdr x))
+      x
+      (last-pair (cdr x))))
+
+(define z (make-cycle (list 'a 'b 'c)))
+
+(cycle? z)
+(iter (cdr z))
+(iter (cddz))
