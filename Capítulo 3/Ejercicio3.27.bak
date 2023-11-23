@@ -1,0 +1,63 @@
+#lang sicp
+
+(define (make-table)
+  (list '*table*))
+
+(define (assoc key records)
+  (cond ((null? records) false) 
+        ((equal? key (caar records)) 
+         (car records))
+        (else (assoc key (cdr records)))))
+
+(define (insert! list-key value table)
+  (define (last-pair x) (if (null? (cdr x)) x (last-pair (cdr x))))
+  (define (concatenated x value) 
+    (let ((lastt (last-pair x)))
+      (if (not (pair? (cdr x)))
+          (cons (car lastt) value)
+          (list (car x) (concatenated (cdr x) value)))))  
+  (let ((subtable (assoc (car list-key) (cdr table))))               
+    (if (and subtable (not (null? (cadr list-key))))                         
+        (let ((record (assoc (cadr list-key) (cdr subtable))))      
+          (if (and record (not (null? (cddr list-key))))            
+              (if (not (pair? (cdr record)))                        
+                  (set-cdr! record value)
+                  (insert! (cddr list-key) value record))          
+              (insert! (cdr list-key) value subtable)))                                                                             
+        (set-cdr! table
+                  (cons (concatenated list-key value)
+                        (cdr table)))))                                  
+  'ok)
+
+(define (lookup list-key table)
+  (let ((subtable (assoc (car list-key) (cdr table))))   
+    (if (and subtable (not (null? (cdr list-key))))       
+        (let ((record (assoc (cadr list-key) (cdr subtable))))          
+          (if record              
+              (if (not (pair? (cdr record)))                 
+                  (cdr record)            
+                  (if (not (null? (cddr list-key)))
+                      (lookup (cddr list-key) record) 
+                      false))                                        
+              false))                
+    false)))
+
+(define (memoize f)
+  (let ((table (make-table)))
+    (lambda (x)
+      (let ((previously-computed-result 
+             (lookup x table)))
+        (or previously-computed-result
+            (let ((result (f x)))
+              (insert! x result table)
+              result))))))
+
+(define memo-fib
+  (memoize 
+   (lambda (n)
+     (cond ((= n 0) 0)
+           ((= n 1) 1)
+           (else 
+            (+ (memo-fib (- n 1))
+               (memo-fib (- n 2))))))))
+

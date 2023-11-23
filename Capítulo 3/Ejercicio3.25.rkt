@@ -159,6 +159,8 @@
 (define l2 (list 'math 'operands 'additive '-))
 (lookup l2 table) ; 2. Yay!
 
+(lookup (list 'math 'functions 'continue 'identity) table)
+
 ; Auxiliary tests
 ;(define subtable (assoc (car l1) (cdr table)))
 ;subtable ; (math (functions (continue (identity . 1))) (operands (multiplicative (* . 1)) (additive (- . 2) (+ . 1))))
