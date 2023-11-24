@@ -1,0 +1,17 @@
+#lang sicp
+
+; First in, first out order
+
+(define a1 (make-wire))
+(define a2 (make-wire))
+(define output (make-wire))
+(and-gate a1 a2 output)
+(propagate)
+
+(set-signal! a1 0)
+(set-signal! a2 1)
+(propagate)        
+
+(set-signal! a1 1)
+(set-signal! a2 0)
+(propagate)         
