@@ -42,13 +42,11 @@
          (error "FRONT-DELETE! called with an empty deque" deque))
         (else (set-front-ptr! deque (cdr (front-ptr deque))))))
 
-(define (rear-delete-deque! deque) ; ((a b c d) d)
-  
+(define (rear-delete-deque! deque)
   (define (reverse l)
     (if (null? l)
         nil
         (append (reverse (cdr l)) (list (car l)))))
-  
   (cond ((empty-deque? deque)
          (error "REAR-DELETE! called with an empty deque" deque))
         (else 
@@ -56,14 +54,6 @@
            (set-front-ptr! inv-dq (cdr (front-ptr inv-dq))); ((c b a) a)
            (set-rear-ptr! deque (list (front-deque inv-dq))) ; ((c b a) c)
            (set-front-ptr! deque (reverse (front-ptr inv-dq)))))))  ; ((a b c) c)
-
-(define (consnew a . b)
-  )
-
-  
-
-(define (rear-delete-dequev2! deque)
-  
 
 (define (print-deque deque)
   (front-ptr deque))
@@ -105,8 +95,3 @@
 (rear-ptr q1) ; (c). OK
 
 ; The result is the one asked. However, I doubt rear-delete-deque! is accomplished in O(1) steps. I find difficult to check this.  
-
-
-
-
-

@@ -1,14 +1,39 @@
 #lang sicp
 
-(define (front-ptr deque) (car deque))
-(define (rear-ptr deque) (cdr deque))
+(define (n-cons a b c)
+  (lambda (p) (p a b c)))
+  
+(define (n-car h)
+  (h (lambda (x y z) x)))
+  
+(define (n-cant h)
+  (h (lambda (x y z) y)))
 
-(define (set-front-ptr! deque item) (set-car! deque item))
-(define (set-rear-ptr! deque item) (set-cdr! deque item))
+(define (n-cdr h)
+  (h (lambda (x y z) z)))
+
+(define (front-ptr deque) (n-car deque))
+(define (rear-ptr deque) (n-cdr deque))
+
+(define (set-n-car! deque item)
+  (set! deque (n-cons item (n-cant deque) (n-cdr deque))))
+
+(define (set-n-cdr! deque item)
+  (n-cons (n-car deque) (n-cant deque) item))
+
+(define (set-front-ptr! deque item)
+  (set-n-car! deque item)
+  ;(set-car! deque item)
+  )
+
+(define (set-rear-ptr! deque item)
+  (set-n-cdr! deque item)
+  ;(set-cdr! deque item)
+  )
 
 (define (empty-deque? deque) (null? (front-ptr deque)))
 
-(define (make-deque) (cons '() '()))
+(define (make-deque) (n-cons '() '() '()))
 
 (define (front-deque deque)
   (if (empty-deque? deque)
@@ -28,32 +53,44 @@
           (else
            (set-front-ptr! deque (cons item (front-ptr deque)))))))
 
-(define (rear-insert-deque! deque item)
-  (let ((new-pair (cons item '())))
+(define (rear-insert-deque! deque item)  
     (cond ((empty-deque? deque)
+           (let ((new-pair (n-cons item '() '())))
            (set-front-ptr! deque new-pair)
-           (set-rear-ptr! deque new-pair))
+           (set-rear-ptr! deque new-pair)))
           (else
+           (let ((new-pair (n-cons item (car (rear-ptr deque)) '())))
            (set-cdr! (rear-ptr deque) new-pair)
            (set-rear-ptr! deque new-pair)))))
 
 (define (front-delete-deque! deque)
   (cond ((empty-deque? deque)
          (error "FRONT-DELETE! called with an empty deque" deque))
-        (else (set-front-ptr! deque (cdr (front-ptr deque))))))
+        (else (set-front-ptr! deque (n-cdr (front-ptr deque))))))
 
-(define (rear-delete-deque! deque)
-  (define (reverse l)
-    (if (null? l)
-        nil
-        (append (reverse (cdr l)) (list (car l)))))
+(define (rear-delete-deque! deque) ; ((a b c d) d)
+  
+  ;  (define (reverse l)
+  ;    (if (null? l)
+  ;        nil
+  ;        (append (reverse (cdr l)) (list (car l)))))
+  
   (cond ((empty-deque? deque)
          (error "REAR-DELETE! called with an empty deque" deque))
-        (else 
-         (let ((inv-dq (cons (reverse (front-ptr deque)) (list (front-deque deque))))) ; ((d c b a) a)
-           (set-front-ptr! inv-dq (cdr (front-ptr inv-dq))); ((c b a) a)
-           (set-rear-ptr! deque (list (front-deque inv-dq))) ; ((c b a) c)
-           (set-front-ptr! deque (reverse (front-ptr inv-dq)))))))  ; ((a b c) c)
+        
+        (else
+         
+         ;         (let ((inv-dq (cons (reverse (front-ptr deque)) (list (front-deque deque))))) ; ((d c b a) a)
+         ;           (set-front-ptr! inv-dq (cdr (front-ptr inv-dq))); ((c b a) a)
+         ;           (set-rear-ptr! deque (list (front-deque inv-dq))) ; ((c b a) c)
+         ;           (set-front-ptr! deque (reverse (front-ptr inv-dq))))
+
+         
+         (set-cdr! rear-ptr (n-cant rear-ptr))
+
+
+         )))  ; ((a b c) c)
+  
 
 (define (print-deque deque)
   (front-ptr deque))
