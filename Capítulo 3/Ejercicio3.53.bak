@@ -1,0 +1,15 @@
+#lang sicp
+
+(define s (cons-stream 1 (add-streams s s)))
+
+; (add-streams s s) is equivalent to (stream-map + s s) using the 3.50 stream-map definition
+
+(define (stream-map proc . argstreams)
+  (if (stream-null? (car argstreams))
+      the-empty-stream
+      (cons-stream
+       (apply proc (map stream-car argstreams))
+       (apply stream-map
+              (cons proc 
+                    (map stream-cdr
+                         argstreams))))))
