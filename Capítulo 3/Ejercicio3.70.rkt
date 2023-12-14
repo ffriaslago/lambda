@@ -1,0 +1,181 @@
+#lang sicp
+
+; All the auxiliary definitions of subsection 3.5.1
+
+(define (stream-car stream) 
+  (car stream))
+
+(define (stream-cdr stream) 
+  (force (cdr stream)))
+
+(define (stream-ref s n)
+  (if (= n 0)
+      (stream-car s)
+      (stream-ref (stream-cdr s) (- n 1))))
+
+(define (stream-for-each proc s)
+  (if (stream-null? s)
+      'done
+      (begin 
+        (proc (stream-car s))
+        (stream-for-each proc 
+                         (stream-cdr s)))))
+
+(define (stream-map proc . argstreams)
+  (if (stream-null? (car argstreams))
+      the-empty-stream
+      (cons-stream
+       (apply proc (map stream-car argstreams))
+       (apply stream-map
+              (cons proc 
+                    (map stream-cdr
+                         argstreams))))))
+
+(define (display-stream s)
+  (stream-for-each display-line s))
+
+(define (display-line x)
+  (newline)
+  (display x))
+
+(define (stream-enumerate-interval low high)
+  (if (> low high)
+      the-empty-stream
+      (cons-stream
+       low
+       (stream-enumerate-interval (+ low 1)
+                                  high))))
+
+(define (stream-filter pred stream)
+  (cond ((stream-null? stream) 
+         the-empty-stream)
+        ((pred (stream-car stream))
+         (cons-stream 
+          (stream-car stream)
+          (stream-filter 
+           pred
+           (stream-cdr stream))))
+        (else (stream-filter 
+               pred 
+               (stream-cdr stream)))))
+
+(define (memo-proc proc)
+  (let ((already-run? false) (result false))
+    (lambda ()
+      (if (not already-run?)
+          (begin (set! result (proc))
+                 (set! already-run? true)
+                 result)
+          result))))
+
+(define (scale-stream stream factor)
+  (stream-map
+   (lambda (x) (* x factor))
+   stream))
+
+; Merge procedure from exercise 3.56 (from the book)
+; This procedure combines two ordered streams into one ordered result stream, eliminating repetitions
+
+(define (merge s1 s2)
+  (cond ((stream-null? s1) s2)
+        ((stream-null? s2) s1)
+        (else
+         (let ((s1car (stream-car s1))
+               (s2car (stream-car s2)))
+           (cond ((< s1car s2car)
+                  (cons-stream s1car (merge (stream-cdr s1) s2)))
+                 ((> s1car s2car)
+                  (cons-stream s2car (merge s1 (stream-cdr s2))))
+                 (else
+                  (cons-stream s1car
+                               (merge (stream-cdr s1)
+                                      (stream-cdr s2)))))))))
+
+(define (integers-starting-from n)
+  (cons-stream 
+   n (integers-starting-from (+ n 1))))
+
+(define integers (integers-starting-from 1))
+
+(define (merge-weighted s1 s2 weight) ; s1 and s2 are streams. weight is a procedure
+  (cond ((stream-null? s1) s2)
+        ((stream-null? s2) s1)
+        (else
+         (let ((s1car (stream-car s1))
+               (s2car (stream-car s2)))
+           ; Until here, same procedure
+           (cond ((<= (weight s1car) (weight s2car)) ; It is computed the weight.                  
+                  (cons-stream s1car (merge-weighted (stream-cdr s1) s2 weight)))
+                 
+                 ((> (weight s1car) (weight s2car))
+                  (cons-stream s2car (merge-weighted s1 (stream-cdr s2) weight))))))))
+                 ; What to do in the case they have the same weight? For example, for section A. (1 9) (2 8) (3 7) (4 6) (5 5) all will have the same weight.
+                 ; Ideally, the best order is to put them in the same order as they are written, so first group
+                 
+
+(define (weighted-pairs s t weight)
+  (cons-stream
+   (list (stream-car s) (stream-car t)) ; First element of each stream. It is assumed that this pair is the one with the lowest weight
+   
+   (merge-weighted ; instead of interleave, because now a precise order is wanted
+    
+    (stream-map (lambda (x) 
+                  (list (stream-car s) x))
+                (stream-cdr t)) ; The first stream is the same one as for interleave 
+    
+    (weighted-pairs (stream-cdr s) (stream-cdr t) weight) ; Second one is the merge-weighted procedure with the cdrs
+    
+    weight)))
+
+;
+; Section A
+;
+
+(define (weighta pair)
+  (+ (car pair) (cadr pair)))
+
+(define sA (weighted-pairs integers integers weighta))
+
+(stream-ref sA 0) ; (1 1). W2
+(stream-ref sA 1) ; (1 2). W3
+(stream-ref sA 2) ; (1 3). W4
+(stream-ref sA 3) ; (2 2). W4
+(stream-ref sA 4) ; (1 4). W5
+(stream-ref sA 5) ; (2 3). W5
+(stream-ref sA 6) ; (1 5). W6
+(stream-ref sA 7) ; (2 4). W6
+(stream-ref sA 8) ; (3 3). W6
+(stream-ref sA 9) ; (1 6). W7
+
+;
+; Section B
+;
+
+(define (weightb pair)
+  (+ (* 2 (car pair)) (* 3 (cadr pair)) (* 5 (* (car pair) (cadr pair)))))
+
+(define not235integers
+  (stream-filter
+   (lambda (x)
+     (and
+      (not (= (remainder x 2) 0))
+      (not (= (remainder x 3) 0))
+      (not (= (remainder x 5) 0))))
+   integers))
+
+(define sB (weighted-pairs not235integers not235integers weightb))
+
+(stream-ref sB 0) ; (1 1). W10
+(stream-ref sB 1) ; (1 7). W58
+(stream-ref sB 2) ; (1 11). W90
+(stream-ref sB 3) ; (1 13). W106
+(stream-ref sB 4) ; (1 17). W138
+(stream-ref sB 5) ; (1 19). W154
+(stream-ref sB 6) ; (1 23). W186
+(stream-ref sB 7) ; (1 29). W234
+(stream-ref sB 8) ; (1 31). W250
+(stream-ref sB 9) ; (7 7). W280. 
+  
+
+
+

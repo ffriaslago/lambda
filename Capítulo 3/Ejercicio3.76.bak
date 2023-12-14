@@ -1,0 +1,17 @@
+#lang sicp
+
+(define (smooth s)
+  (cons-stream
+   (/ (+ (stream-car s) (stream-car (stream-cdr s))) 2)
+   (smooth (stream-cdr s))))
+
+(define (make-zero-crossingsv2 input-stream last-sense-data-value last-avpt)
+  
+  (let ((avpt (/ (+ (stream-car input-stream) last-sense-data-value) 2)))
+    
+    (cons-stream (sign-change-detector avpt last-avpt)
+                 (make-zero-crossings (stream-cdr input-stream) (stream-car input-stream) avpt))))
+
+
+
+  
