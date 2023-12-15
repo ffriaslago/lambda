@@ -1,0 +1,22 @@
+#lang sicp
+
+; and and or as special forms
+
+(define (and? exp) (tagged-list? exp 'and)) ; The idea is that both and and or are identified with their name, as it was the case for if and con
+(define (and-clauses exp) (cdr exp)) ; Then, it is identified all the expressions
+(define (first-clause seq) (car seq))
+(define (rest-clauses seq) (cdr seq))
+(define (no-clauses? seq) (null? seq))
+
+(define (eval-and exps env) ; First it is build the evaluation procedure for and
+  (cond ((no-clauses? exps) true) ; If there is not any clause, true by default
+        ((not (true? (eval (first-clause exps)))) false)
+        (else (eval-and (rest-clauses exps) env))))
+
+(define (or? exp) (tagged-list? exp 'or))
+(define (or-clauses exp) (cdr exp))
+
+(define (eval-or exps env)
+  (cond ((no-clauses? exps) false)
+        ((true? (eval (first-clause exps))) true)
+        (else (eval-or (rest-clauses exps) env))))

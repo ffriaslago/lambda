@@ -1,0 +1,22 @@
+#lang sicp
+
+; Arguments:
+; -> exps: operands of the combination
+; -> env: environment
+
+; In the eval definition, this is used in the case of combinations
+;((application? exp)
+; (apply (eval (operator exp) env) 
+;        (list-of-values (operands exp) env)))
+
+(define (list-of-values exps env)
+  (if (no-operands? exps)
+      '()
+      (cons (eval (first-operand exps) env)
+            (list-of-values (rest-operands exps) env))))
+
+(define (list-of-values-left-to-right exps env)
+  (if (no-operands? exps)
+      '()
+      (cons (eval (car exps) env)
+            (list-of-values (cdr exps) env))))

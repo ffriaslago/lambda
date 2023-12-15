@@ -1,0 +1,12 @@
+#lang sicp
+
+(<test> -> <recipient>)
+
+; Remainder: assoc procedure. Arguments are a key and a list of records. Assoc returns the record that has the given key as its car
+; (assoc 'b '((a 1) (b 2))) returns (b 2)
+
+(cond ((assoc 'b '((a 1) (b 2))) => cadr)
+      (else false))
+
+; Here, test is (assoc 'b '((a 1) (b 2))), which returns (b 2), which is a true value
+
