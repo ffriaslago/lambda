@@ -1,0 +1,15 @@
+#lang sicp
+
+(let* ((x 3) ; assigns the value 3 to x
+       (y (+ x 2)) ; the preceding binding is visible, so y is (+ 3 2), 5
+       (z (+ x y 5))) ; Then z is (+ 3 5 5), 13
+  (* x z)) ; (* 3 13), 39
+
+(define (let*? exp) (tagged-list? exp 'let*))
+
+(define (let*->nested-lets exp)
+  
+(define (let->combination exp)
+  (cons (make-lambda (let-variables exp)
+                     (let-body exp))
+        (let-expressions exp)))
