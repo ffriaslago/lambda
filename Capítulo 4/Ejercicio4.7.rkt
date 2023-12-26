@@ -5,11 +5,9 @@
        (z (+ x y 5))) ; Then z is (+ 3 5 5), 13
   (* x z)) ; (* 3 13), 39
 
-;(define (let*? exp) (tagged-list? exp 'let*))
-
-;(define (let*->nested-lets exp)
-
- ; )
+;
+; Extra Exercise: Expressing let* with lambda functions
+;
 
 ; Using
 
@@ -76,3 +74,58 @@
 ;    (+ x 3)))
 ; 
 ; 4)
+
+;
+; Original Exercise
+;
+
+(define (let*? exp) (tagged-list? exp 'let*))
+
+; '(let* ((x 3) (y (+ x 2)) (z (+ x y 5))) (* x z))
+; (car exp) -> let*
+; (cdr exp) -> (((x 3) (y (+ x 2)) (z (+ x y 5))) (* x z))
+; (cadr exp) -> ((x 3) (y (+ x 2)) (z (+ x y 5)))
+; (cddr exp) -> ((* x z))
+; (caddr exp) -> (* x z)
+
+(define (let*-body exp)
+  (caddr exp))
+
+(define (let*-varexps exp)
+  (cadr exp))
+
+(define (make-let varexps body)
+  (cons 'let (cons varexps body)))
+
+; Construction of let*->nested-lets using the procedure from the book sequence->exp, that transforms a sequence into a single expression
+
+(define (sequence->exp seq)
+  (cond ((null? seq) seq)
+        ((last-exp? seq) (first-exp seq))
+        (else (make-begin seq))))
+
+(define (let*->nested-lets exp) ; The idea is to create the lets manually
+  (define (iter-let varexps body)
+    (if (null? varexps)
+        (sequence->exp body)
+        (make-let (list (car args))
+                  (list (iter-let (cdr varexps) body)))))
+  (iter-let (let*-varexps exp) (let*-body exp)))
+
+; Question, is it sufficient to add a clause to eval whose action is
+;
+; (eval (let*->nested-lets exp) env)
+;
+; or must we explicitly expand let* in terms of non-derived expressions
+
+; As the question is under the assumption that exercise 3.6 is implemented, eval can handle let and with let*->nested-lets, let* is handled as let expressions, so
+; with the expression (eval (let*->nested-lets exp) env) is enough
+
+        
+    
+
+
+
+
+
+

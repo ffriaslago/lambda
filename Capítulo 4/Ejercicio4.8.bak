@@ -1,0 +1,17 @@
+#lang racket
+
+; (let ⟨var⟩ ⟨bindings⟩ ⟨body⟩)
+
+(define (fib n)
+  
+  (let fib-iter ; ⟨var⟩
+    
+    ((a 1) (b 0) (count n)) ; ⟨bindings⟩
+    
+    (if (= count 0)             ; ⟨body⟩ start
+        b                       ; ⟨body⟩ 
+        (fib-iter (+ a b)       ; ⟨body⟩                  
+                  a             ; ⟨body⟩ 
+                  (- count 1))) ; ⟨body⟩ end
+    )
+  )
