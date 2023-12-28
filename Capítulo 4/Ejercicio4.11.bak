@@ -1,0 +1,16 @@
+#lang sicp
+
+; From the book.
+
+; Each frame of an environment is represented as a pair of lists: a list of the variables bound in that frame and a list of the associated values.
+
+(define (make-frame variables values)
+  (cons (variables values)))
+
+(define (frame-variables frame) (car frame))
+
+(define (frame-values frame) (cdr frame))
+
+; Now, we can represent frame as a list of bindings, where each bingdins 
+
+  

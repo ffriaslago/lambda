@@ -1,0 +1,19 @@
+#lang sicp
+
+; Let's try to replicate the loop for with an usual sintax:
+
+;'(for (i 0) (< i 10) (+ i 1) ⟨body⟩)
+; (car exp) -> for*
+; (cdr exp) -> ((i 0) (< i 10) (+ i 1) ⟨body⟩)
+; (cadr exp) -> (i 0)
+; (cddr exp) -> ((< i 10) (+ i 1) ⟨body⟩)
+; (cdddr exp) -> ((+ i 1) ⟨body⟩)
+; (cddddr exp) -> ⟨body⟩
+
+(define (for? exp) (tagged-list? exp 'for))
+
+(define (for-body exp) (car (cddddr exp))) ; ⟨body⟩
+(define (for-iterator exp) (cadr exp)) ; i
+(define (for-maxiter exp) (caddr (caddr exp))) ; 10
+(define (for-predicate exp) (caddr exp)) ; (< i 10)
+(define (for-step exp) (cadddr exp)) ; (+ i 1)
