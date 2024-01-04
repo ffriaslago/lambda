@@ -1,0 +1,30 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 1
+% Exercise 1.1
+
+% parent(X,Y). -> X is a parent of Y
+
+parent(tom,bob).
+parent(pam,bob).
+parent(tom,bob).
+parent(tom,liz).
+parent(bob,ann).
+parent(bob,pat).
+parent(pat,jim).
+
+% (a) ?- parent(jim,X). -> false. jim has no children
+% (b) ?- parent(X,jim). -> X = pat. pat is a parent of jim.
+% (c) ?- parent(pam,X),parent(X,pat). -> X = bob. pam is a parent of bob and bob is a parent of pat.
+% (d) ?- parent(pam,X),parent(X,Y),parent(Y,jim). -> X = bob, Y = pat. pam is the parent of bob, bob
+% is a parent of both ann and pat, but only pat is a parent of jim.
+
+% Exercise 1.2
+
+% (a) Who is Pat's parent?
+% ?- parent(X,pat). (X = bob)
+
+% (b) Does Liz have a child?
+% ?- parent(liz,X). (false)
+
+% (c) Who is Pat's grandparent? 
+% ?- parent(X,pat),parent(Y,X). Abswer will be the value of Y. (X = bob, Y = tom ; X = bob, Y = pam)
