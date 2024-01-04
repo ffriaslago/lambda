@@ -1,0 +1,24 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 1
+% Exercise 1.3
+
+% (a) Everybody who has a child is happy
+% happy(X) :- 
+% 	parent(X,Y).
+
+% (b) For all X, if X has a child who has a sister then X has two children
+% hastwochildren(X) :-
+%	parent(X,Y),
+%	sister(Z,Y).
+
+% Exercise 1.4
+
+% grandchild(X,Z) :-
+%	parent(Z,Y),
+%	parent(Y,X).
+
+% Exercise 1.5
+
+% aunt(X,Y) :-
+%	sister(X,Z),
+%	parent(Z,Y).
