@@ -1,24 +1,52 @@
 % PROLOG. Programming for Artificial Intelligence.
 % Chapter 1
+
+% Auxiliary facts from previous exercises
+parent(tom,bob).
+parent(pam,bob).
+parent(tom,bob).
+parent(tom,liz).
+parent(bob,ann).
+parent(bob,pat).
+parent(pat,jim).
+
 % Exercise 1.3
 
+female(pam).
+female(pat).
+female(ann).
+female(liz).
+
+male(tom).
+male(bob).
+male(jim).
+
+sister(X,Y):-
+    parent(Z,X),
+    parent(Z,Y),
+    female(X).
+
 % (a) Everybody who has a child is happy
-% happy(X) :- 
-% 	parent(X,Y).
+happy(X):-
+    parent(X,_).
+% ?- happy(bob). -> true
 
 % (b) For all X, if X has a child who has a sister then X has two children
-% hastwochildren(X) :-
-%	parent(X,Y),
-%	sister(Z,Y).
+hastwochildren(X):-
+	parent(X,Y),
+	sister(_,Y).
+% ?- hastwochildren(bob). -> true
 
 % Exercise 1.4
 
-% grandchild(X,Z) :-
-%	parent(Z,Y),
-%	parent(Y,X).
+grandchild(X,Z) :-
+	parent(Z,Y),
+	parent(Y,X).
+% ?- grandchild(jim,bob). -> true
 
 % Exercise 1.5
 
-% aunt(X,Y) :-
-%	sister(X,Z),
-%	parent(Z,Y).
+aunt(X,Y) :-
+	sister(X,Z),
+	parent(Z,Y).
+% ?- aunt(ann,jim). -> true
