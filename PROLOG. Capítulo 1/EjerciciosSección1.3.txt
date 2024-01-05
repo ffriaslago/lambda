@@ -1,5 +1,6 @@
 % PROLOG. Programming for Artificial Intelligence.
 % Chapter 1
+% Section 1.3
 
 % Auxiliary code from previous exercises
 

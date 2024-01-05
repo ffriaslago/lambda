@@ -1,0 +1,29 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 2
+% Section 2.1
+% Exercise 2.1
+
+% (a) Diana -> variable
+% (b) diana -> atom
+% (c) 'Diana' -> atom
+% (d) _diana -> variable
+% (e) 'Diana goes south' -> atom
+% (f) goes(diana,south) -> structure
+% (g) 45 -> number
+% (h) 5(X,Y) -> not correct. 5 is a number. 
+% (i) +( north,west) -> structure
+% (j) three( Black( Cats) ) -> not correct. Black and Cats are both variables.
+
+% Exercise 2.2
+
+% Rectangle. Represented by three points
+
+rectangle( point(X1,Y1), point(X2,Y2), point(X3,Y3) ).
+
+% Square. Represented by two points that define the diagonal.
+
+square( point(X1,Y1), point(X2,Y2) ).
+
+% Circle. Represented by a point, the centre and a segment, the radius.
+
+circle( point(X1,Y1), seg( point(X1,Y1), point(X2,Y2) ) ).

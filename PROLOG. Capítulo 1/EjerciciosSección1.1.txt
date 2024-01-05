@@ -1,5 +1,6 @@
 % PROLOG. Programming for Artificial Intelligence.
 % Chapter 1
+% Section 1.1
 % Exercise 1.1
 
 % parent(X,Y). -> X is a parent of Y

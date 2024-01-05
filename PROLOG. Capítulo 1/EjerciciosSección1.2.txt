@@ -1,5 +1,6 @@
 % PROLOG. Programming for Artificial Intelligence.
 % Chapter 1
+% Section 1.2
 
 % Auxiliary facts from previous exercises
 parent(tom,bob).
@@ -28,13 +29,13 @@ sister(X,Y):-
 
 % (a) Everybody who has a child is happy
 happy(X):-
-    parent(X,_).
+    parent(X,Y).
 % ?- happy(bob). -> true
 
 % (b) For all X, if X has a child who has a sister then X has two children
 hastwochildren(X):-
 	parent(X,Y),
-	sister(_,Y).
+	sister(Z,Y).
 % ?- hastwochildren(bob). -> true
 
 % Exercise 1.4

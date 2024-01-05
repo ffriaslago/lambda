@@ -1,0 +1,45 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 2
+% Section 2.2
+% Exercise 2.3
+
+% (a) point( A, B)=point( 1, 2). Successful. The resulting instation is:
+% A = 1
+% B = 2
+
+% (b) point( A, B)=point( X, Y, Z). Not successful. Both are structures, but clause (b)
+% is not fulfilled as not all their components match.
+
+% (c) plus( 2, 2) = 4. Not succesful. Left side is a structure, right side a constant.
+
+% (d) +( 2, D) = +( E, 2). Successful. The resulting instation is:
+% D = 2
+% E = 2
+
+% (e) triangle( point(-1,0), P2, P3) = triangle( P1, point(1,0), point(0,Y) ).
+% Successful. The resulting instation is:
+% P1 = point(-1,0)
+% P2 = point(1,0)
+% P3 = point(0,Y)
+
+% The family of triangles is all the isosceles triangles with their base being the segment
+% between (-1,0) and (1,0) as (0,Y) is on the mediatrix of that segment
+
+% Exercise 2.4
+
+% seg( point( 5, Y1), point( 5, Y2) ).
+
+% Exercise 2.5
+
+% A rectangle is represented by the term rectangle( P1, P2, P3, P4) where the P's are the 
+% vertices of the rectangle positively ordered. 
+
+% The most general expressions for the four points can be written as
+% P1 = point( X1, Y1).
+% P2 = point( X2, Y2).
+% P3 = point( X3, Y3).
+% P4 = point( X4, Y4).
+
+% Now it is defined the asked relation
+
+% regular( rectangle( point( X1, Y1), point( X2, Y1), point(X2, Y3), point( X1, Y3) ) ).

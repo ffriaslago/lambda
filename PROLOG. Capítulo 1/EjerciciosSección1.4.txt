@@ -1,5 +1,6 @@
 % PROLOG. Programming for Artificial Intelligence.
 % Chapter 1
+% Section 1.4
 % Exercise 1.7
 
 % (a) ?- parent(pam,bob).
@@ -63,4 +64,4 @@
 % |        parent(bob,ann)      |                          |        parent(bob,pat)      |
 % |        parent(ann,jim)      |                          |        parent(pat,jim)      |
 % |_____________________________|                          |_____________________________|
-%              no                                                         yes
+%              no (backtracking)                                         yes
