@@ -1,0 +1,21 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 2
+% Section 2.4
+% Exercise 2.9
+
+% QUESTION
+% ?- big(X), dark(X).
+
+% EXECUTION TRACE
+% (1) Initial goal list: big(X), dark(X).
+% (2) Scanning for a clause whose head matches the first goal.
+%	Clause 1 found. big(bear). The goal list shrinks to dark(bear). 
+% (3) Clause 7 found. Replace the goal by the body of clause 7, giving a new goal
+%	New goal is black(bear).
+% (4) No clause found. Backtracking. Undo instantiation. Seach below clause 7.
+% 	Clause 8 is found. New goal is brown(bear).
+% (5) Clause 4 found. Successful termination and the corresponding variable instantiation is:
+% 	X = bear. 
+
+% Prolog does more work in the other case, with different order
+% ?- dark(x), big(X). does more work

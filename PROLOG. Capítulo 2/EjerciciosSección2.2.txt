@@ -3,7 +3,7 @@
 % Section 2.2
 % Exercise 2.3
 
-% (a) point( A, B)=point( 1, 2). Successful. The resulting instation is:
+% (a) point( A, B)=point( 1, 2). Successful. The resulting instantiation is:
 % A = 1
 % B = 2
 
@@ -12,12 +12,12 @@
 
 % (c) plus( 2, 2) = 4. Not succesful. Left side is a structure, right side a constant.
 
-% (d) +( 2, D) = +( E, 2). Successful. The resulting instation is:
+% (d) +( 2, D) = +( E, 2). Successful. The resulting instantiation is:
 % D = 2
 % E = 2
 
 % (e) triangle( point(-1,0), P2, P3) = triangle( P1, point(1,0), point(0,Y) ).
-% Successful. The resulting instation is:
+% Successful. The resulting instantiation is:
 % P1 = point(-1,0)
 % P2 = point(1,0)
 % P3 = point(0,Y)

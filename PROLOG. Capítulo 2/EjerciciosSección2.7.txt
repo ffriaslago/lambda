@@ -1,0 +1,12 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 2
+% Section 2.7
+% Exercise 2.10
+
+% ?- X=f(X). -> X = f(X).
+% ?- X=f(f(X)). -> X = f(f(X)).
+% ?- X=f(f(f(X))). -> X = f(f(f(X))).
+
+% From the definition of matching.
+% If S is a variable (X is a variable) and T is anything, f(X) is anything,
+% then they match and S is instantaited to T.

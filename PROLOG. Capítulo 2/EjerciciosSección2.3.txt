@@ -1,0 +1,59 @@
+% PROLOG. Programming for Artificial Intelligence.
+% Chapter 2
+% Section 2.3
+% Exercise 2.6
+
+f( 1, one).
+f( s(1), two).
+f( s(s(1)), three).
+f( s(s(s(X))), N) :-
+    f(X,N).
+
+% (a) ?- f( s(1),A). -> A = two (matching, there is the instantiation A = two)
+% (b) ?- f( s(s(1)), two). -> false. There is the fact f( s(1), two).
+% (c) ?- f( s(s(s(s(s(s(1)))))), C). -> C = one.
+% Using the rule given:
+% f( s(s(s(s(s(s(1)))))), C) = f( s(s(s(1))), C) = f (1, C)
+% So there is a matching and the instantiation C = one.
+% (d) f( D, three).
+% -> Answer 1. D = s(s(1))
+% -> Answer 2. D = s(s(s(s(s(1)))))
+% There are infinite answers because of the given rule, D can be all concatenations of 
+% applying s adding 2 of them each time starting from 2.
+
+% Exercise 2.7
+
+% Original program
+relatives(X,Y):-
+    predecessor(X,Y). % One is a predecessor of the other, first way
+
+relatives(X,Y):-
+    predecessor(Y,X). % One is a predecessor of the other, second way
+
+relatives(X,Y):-
+    predecessor(Z,X),
+    predecessor(Z,Y). % X and Y have a common predecessor
+
+relatives(X,Y):-
+    predecessor(X,Z),
+    predecessor(Y,Z). % X and Y have a common successor
+
+% Shorter program using semicolon notation
+relatives(X,Y):-
+    predecessor(X,Y);
+    predecessor(Y,X);
+    predecessor(Z,X),predecessor(Z,Y);
+    predecessor(X,Z),predecessor(Y,Z).
+
+% Exercise 2.8
+
+% Original program
+translate( Number, Word) :-
+    Number = 1, Word = one;
+    Number = 2, Word = two;
+    Number = 3, Word = three. 
+
+% Alternative way of writing the program without the semicolon notation
+translate( 1, one).
+translate( 2, two). 
+translate( 3, three). 
