@@ -1,0 +1,46 @@
+#lang sicp
+
+; 4.4 Logic Programming. Initial exercises
+;
+; Simple queries
+;
+; Exercise 4.55.
+;
+; a)
+
+(supervisor ?x (Bitididdle Ben))
+
+; b)
+
+(job ?name (accounting . ?position))
+
+; c)
+
+(address ?name (Slumerville . ?place))
+
+; Compound queries
+;
+; Exercise 4.56.
+;
+; a)
+
+(and (supervisor ?x (Bitididdle Ben))
+     (address ?x ?y))
+
+; b)
+
+(and (salary (Bitididdle Ben) ?amount)
+     (salary ?person ?amount2)
+     (lisp-value > ?amount ?amount2))
+
+; c)
+
+(and (supervisor ?x ?y)
+     (not (job ?y (computer . ?type)))
+     (job ?y ?position))
+
+
+; Rules
+;
+; Exercise 4.57.
+
