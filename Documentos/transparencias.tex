@@ -1,0 +1,1560 @@
+\documentclass{beamer}    % [aspectratio=169]
+\pagestyle{empty}
+
+\usepackage{amsmath}
+\usepackage{mathspec}
+\usepackage{nicefrac}
+%fontspec
+
+\definecolor{morado}{RGB}{85, 39, 107}
+\definecolor{naranja_muy}{RGB}{178, 104, 32}
+\definecolor{naranja_osc}{RGB}{255, 191, 128}
+\definecolor{naranja_claro}{RGB}{255, 229, 204}
+\definecolor{naranja_ter}{RGB}{178, 104, 32}
+\definecolor{naranja_var}{RGB}{178, 104, 32}
+\definecolor{fondo}{RGB}{255, 255, 255}
+\definecolor{frente}{RGB}{0, 0, 0}
+\definecolor{color_r}{RGB}{164, 12, 0}
+\definecolor{color_a}{RGB}{10, 131, 166}
+\definecolor{casilla}{RGB}{237, 168, 100}
+\definecolor{col_b}{RGB}{128, 175, 253}    % predicados
+\definecolor{col_c}{RGB}{246, 0, 10}       % funciones
+\definecolor{col_d}{RGB}{255, 156, 59}     % variables
+
+\def\cxb{\color{col_b}}
+\def\cxc{\color{col_c}}
+\def\cxd{\color{col_d}}
+
+\def\sufijo{_blanco}
+
+\usetheme{default}
+\setbeamercolor{background canvas}{bg=fondo}
+\setbeamercolor{normal text}{fg=frente}
+\setbeamercolor{title}{fg=frente}
+\setbeamercolor{frametitle}{bg=naranja_osc!50!black, fg=black!10}
+\setbeamercolor{block body}{bg=naranja_osc!50!black}
+\setbeamercolor{block title}{bg=yellow}
+
+\setbeamertemplate{blocks}[rounded]
+
+\usefonttheme{professionalfonts}
+% \setsansfont[SmallCapsFont={Linux Biolinum Keyboard O},ItalicFont={Linux Libertine O/I}]%
+\setsansfont[SmallCapsFont={EB Garamond SC},ItalicFont={Linux Libertine O/I},BoldFont={Linux Libertine O/B}]%
+{Aroania}
+%{Linux Biolinum O}
+%{Cantarell}
+%{Droid Sans} % Tal vez demasiado apretada
+%{Liberation Sans}
+%{Luxi Sans}
+
+\setmonofont[BoldFont={TerminusTTF-Bold}]{Terminus (TTF)}
+\setmathsfont(Digits,Latin,Greek){Neo Euler}
+
+\usepackage{amssymb}
+\usepackage{pagecolor}
+\usepackage{pbox}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+
+\setlength\parindent{0pt}
+
+\newcommand\id{\mbox{indeg}}
+\newcommand\od{\mbox{outdeg}}
+
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\R{\mathbb{R}}
+
+\newcommand\ret{↵\ } % ⏎, 〈RET〉
+
+\newcommand\tr{^{\mbox{\footnotesize t}}}   % transpuesta
+
+\newcommand\inp[1]{\colorbox{gray!40}{#1}}
+
+\usepackage{stmaryrd}       % flecha
+
+% \usepackage[colorlinks=true, urlcolor=blue]{hyperref}
+\usepackage{hyperref}
+
+\usepackage{array}
+% alineada a la derecha, anchura fija
+\newcolumntype{R}[1]{>{\raggedright\arraybackslash}m{#1}}
+% mat., alineada a la derecha, anchura fija
+\newcolumntype{O}[1]{>{\hfill\arraybackslash$}m{#1}<{$}}
+% mat., alineada a la izquierda, anchura fija
+\newcolumntype{I}[1]{>{\arraybackslash$}m{#1}<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{M}[1]
+{>{\centering\arraybackslash $}m{#1}<{$}}
+
+\newcommand\figs{../figs}
+\newcommand\cod{../scripts}
+
+\newcommand\espacio{␣}
+\newcommand\vacio{\mbox{\fontspec{FreeSerif}∅}}
+\newcommand\vacin{\mbox{\fontspec{FreeSerif}\footnotesize ∅}}
+
+\pagecolor{morado!10} % 238, 233, 240 (.933, .914, .941)
+
+\def\truca
+{~\par}
+\def\trucavuelve
+{~\par\vspace{-\baselineskip}}
+
+\usepackage[spanish]{babel}
+\usepackage{colortbl}
+
+\newcommand\gr{\color{gray}}
+
+\usepackage{diagbox}
+\usepackage[absolute,overlay]{textpos}
+
+% Caracteres
+%% \def\eqsem{\mbox{\fontspec{FreeSerif} ⧦}}
+\def\true{\mbox{\fontspec{FreeSerif} ⊤}}
+\def\false{\mbox{\fontspec{FreeSerif} ⊥}}
+
+% Letras
+%% \newcommand\true{\texttt{true}}
+%% \newcommand\false{\texttt{false}}
+
+% mathabx
+\usepackage{mathabx}
+\def\eqsem{\vDash\!\!\Dashv}
+%% \def\true{\top}
+%% \def\false{\perp}
+
+% MnSymbol
+%% \usepackage{MnSymbol}
+%% \def\eqsem{\vDash\!\!\leftmodels}
+%% \newcommand\true{\downvdash}
+%% \newcommand\false{\perp}
+
+\def\sa{{\color{naranja_muy} \bullet}}
+\def\sb{{\color{blue!60!white} \star}}
+
+\def\var#1{{\color{naranja_muy}#1}}
+\def\fun#1{\texttt{#1}}
+\def\funr#1{{\color{red}\texttt{#1}}}
+\def\pred#1{{\color{blue!20}#1}}
+\def\dom{{\cal D}}
+
+\usepackage{tikz}
+
+\usetikzlibrary{shapes.misc}
+
+\tikzstyle{caja}=[]
+\tikzstyle{caja_b}=[anchor=east]
+\tikzstyle{caja_d}=[anchor=west]
+\tikzstyle{caja_c}=%
+ [anchor=east, text=gray, cross out, draw=red] % strike out
+
+\def\clp{{\color{gray!80!naranja_muy}\texttt{CLIPS>}}}
+\def\qry{{\color{gray!80!naranja_muy}\texttt{?-}}}
+\def\bl#1{{\color{black!50!blue}\texttt{#1}}}
+\def\ro#1{{\color{red!80!black}\texttt{#1}}}
+
+\begin{document}
+\shorthandoff{>}\shorthandoff{<}
+\begin{frame}
+\centerline{\emph{Cláusulas de Horn.}}
+\centerline{\emph{Resolución SLD}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Cláusulas de Horn}
+
+ La estrategia común para aligerar las dificultades
+ computacionales asociadas al uso del lenguaje de primer
+ orden consiste en restringir el lenguaje,
+ \vspace{5mm}
+
+ buscando un compromiso entre expresividad y tratabilidad.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Cláusulas de Horn}
+
+ La restricción del lenguaje de primer orden típica de la
+ programación lógica consiste en considerar exclusivamente
+ cláusulas como estas:\vspace{5mm}
+
+\begin{center}
+\begin{tabular}{r@{\hspace{1cm}}l}
+$p_1 \land \cdots \land p_n \rightarrow\phantom{\neg} q$ &
+(\emph{positivas} o \emph{definidas})\\
+\only<2->{
+$\neg(p_1 \land \cdots \land p_n) \lor \phantom{\neg} q$ &\\
+$\neg p_1 \lor \cdots \lor \neg p_n \lor \phantom{\neg} q$ &\\[3mm] \hline
+&\\[1mm]
+}
+$p_1 \land \cdots \land p_n \rightarrow \neg q$ &
+(\emph{negativas}).\\
+\only<2->{
+$\neg(p_1 \land \cdots \land p_n) \lor \neg q$ &\\
+$\neg p_1 \lor \cdots \lor \neg p_n \lor \neg q$ &\\
+}
+\end{tabular}
+\end{center}
+
+
+\begin{itemize}
+\only<1>{
+\item Los símbolos $p_i$ y $q$ no representan aquí
+  proposiciones únicamente, sino que pueden ser predicados
+  con argumentos cualesquiera (\emph{átomos}).
+\item Los cuantificadores se han eliminado (suponiendo
+  implícitos los universales y recurriendo a funciones de
+  Skolem para los existenciales).}
+\only<2->{
+\item Una cláusula de Horn es una en la que todas las
+  literales son negaciones, salvo quizás una.
+\item {\sc Alfred Horn} [1951]}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución con cláusulas de Horn}
+
+ El conjunto de cláusulas de Horn es cerrado para el cálculo
+ de resolventes.\vspace{5mm}
+
+ Para que dos cláusulas de Horn den lugar a una resolvente,
+ al menos una de ellas ha de ser positiva:
+
+ \begin{columns}[t]
+ \begin{column}{.47\linewidth}
+\[\begin{array}{r@{\quad}c}
+\neg\sa \lor \cdots \lor \neg\sa \lor\phantom{\neg} q& +\\
+\neg\sa \lor \cdots \lor \neg\sa \lor\neg q& -\\ \hline
+& -\\
+\end{array}\]
+ \end{column}
+ \begin{column}{.5\linewidth}
+\[\begin{array}{r@{\quad}c}
+\neg\sa \lor \cdots \lor \neg\sa \lor \neg\sa
+\lor\phantom{\neg} q& +\\
+\neg\sa \lor \cdots \lor \neg\sa \lor\phantom{\neg} p
+\lor\neg\sa& +\\ \hline
+& +\\
+\end{array}\]
+ \end{column}
+ \end{columns}
+\vspace{5mm}
+
+\pause
+
+El tipo de la otra cláusula coincide con el de la
+resolvente.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución con cláusulas de Horn}
+
+ Supongamos que
+ \begin{itemize}
+ \item $S$ es un conjunto de cláusulas de Horn,
+ \item $c$ es una cláusula de Horn negativa (por
+  ejemplo, $\false$) y
+ \item $S \vdash c$ (mediante resolución).
+ \end{itemize}
+ \vspace{5mm}
+
+ Entonces, existe una deducción de $c$ en la que
+ \begin{itemize}
+ \item se parte de una cláusula negativa de $S$,
+ \item cada cláusula nueva es negativa y
+ \item cada cláusula nueva es la resolvente de la anterior
+   ($-$) de la deducción y de una cláusula ($+$) de $S$.
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución con cláusulas de Horn}
+
+ Por ejemplo, para demostrar $\fun{Mortal}(\fun s)$ a partir
+ de $\forall x\ (\fun{Hombre}(x) \rightarrow
+ \fun{Mortal}(x))$ y $\fun{Hombre}(\fun s)$:
+\vspace{1cm}
+
+ \begin{tikzpicture}{>=stealth}
+ \node[caja,color=naranja_muy] at (-1, 7) {$S$};
+ \node[caja_b] (1) at (0, 6)
+      {$\neg \fun{Mortal}(\fun s)\quad (-)$};
+ \node[caja_b] (2) at (0, 5)
+      {$\neg\fun{Hombre}(x) \lor \fun{Mortal}(x)\quad (+)$};
+ \node[caja_b] (3) at (0, 4)
+      {$\fun{Hombre}(\fun s)\quad (+)$};
+ \draw[color=naranja_muy] (.5,3.5) -- (.5,6.5);
+ \node[caja_b] (a1) at (4.5, 5)
+      {$\neg \fun{Hombre}(\fun s)\quad (-)$};
+ \node[caja_b] (a2) at (6.2, 4)
+      {$\false\quad (-)$};
+ \draw[->] (1) -| (a1.north west);
+ \draw[->] (2) -- (a1);
+ \draw[->] (a1) -| (a2.north west);
+ \draw[->] (3) -- (a2);
+ \end{tikzpicture}
+\end{frame}
+
+%% OTRO EJEMPLO ALGO MÁS COMPLEJO
+
+\begin{frame}
+ \frametitle{Resolución con cláusulas de Horn}
+
+ Este tipo de resolución se conoce como {\bf SLD}
+ (\emph{selected literals, linear pattern, over definite
+   clauses}).
+ \vspace{3mm}
+
+ {\small Lo describió {\sc R. Kowalski} en 1974 y {\sc
+     K. Apt} y {\sc M. van Emden} lo denominaron así en
+   1982.}
+ \vspace{5mm}
+
+ \pause
+
+ Según lo anteriormente enunciado, el método de resolución
+ puede restringirse a la resolución SLD si todas las
+ cláusulas de partida son de Horn.
+ \vspace{5mm}
+
+ \pause
+
+ En el caso proposicional, en cada resolución se «gasta» una
+ literal positiva del conjunto de partida.
+
+ En consecuencia, la longitud de una resolución SLD es
+ lineal en el tamaño del conjunto de partida {\small (en
+   literales, que no en cláusulas)}.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Resolución con cláusulas de Horn}
+
+ \only<-2>{
+ En el caso general del lenguaje de primer orden, la
+ resolución SLD tampoco garantiza finalización. \vspace{3mm}}
+ \only<3->{\fbox{\parbox{\linewidth}{
+ La restricción del lenguaje de primer orden a las cláusulas
+ de Horn sigue siendo {\bf indecidible}
+ (semidecidible).}} \vspace{1mm}}
+
+ Por ejemplo, supongamos una \emph{base de conocimiento}
+ formada por una única cláusula:
+ \[\fun{Apellida}(\fun{padre}(x), y) \rightarrow
+   \fun{Apellida}(x, y).\]
+
+ Si tratamos de averiguar si \underline{\fun{pedro}} se
+ apellida \underline{\fun{pérez}},
+ \only<2->{
+ \hypertarget{apellidos}{}
+ \hyperlink{ejemplos}{\beamerreturnbutton{Índice}}}
+ \vspace{5mm}
+
+\pause
+
+ \begin{tikzpicture}{>=stealth}
+ \node[caja,color=naranja_muy] at (6, 6) {$S$};
+ \node[caja_b] (1) at (0, 6)
+      {$\neg\fun{Apll}(\fun p(x), y) \lor
+       \fun{Apll}(x, y)$};
+ \node[caja_d] (2) at (.5, 6)
+      {$\neg\fun{Apll}(\fun{pedro}, \fun{pérez})$};
+ \draw[color=naranja_muy] (-5,5.5) -- (5,5.5);
+ \node[caja_d] (a1) at (.5, 5)
+      {$\neg\fun{Apll}(\fun{p}(\fun{pedro}),
+                           \fun{pérez})$};
+ \node[caja_d] (a2) at (.5, 4)
+      {$\neg\fun{Apll}(\fun{p}^2(\fun{pedro}),
+                           \fun{pérez})$};
+ \node[caja_d] (a3) at (.5, 3)
+      {$\neg\fun{Apll}(\fun{p}^3(\fun{pedro}),
+                           \fun{pérez})$};
+ \node at (a3.south west) {$\vdots$};
+ %% \node[caja_b] (a4) at (4, 2)
+ %%      {$\neg\fun{Apll}(\fun{p}^4(\fun{pedro}),
+ %%                           \fun{pérez})$};
+ %% \node[caja_b] (a5) at (4, 1)
+ %%      {$\neg\fun{Apll}(\fun{p}^5(\fun{pedro}),
+ %%                           \fun{pérez})$};
+ \draw[->] (1.south) -- (a1.west);
+ \draw[->] (1.south) -- (a2.west);
+ \draw[->] (1.south) -- (a3.west);
+ %% \draw[->] (1.south) -- (a4.west);
+ %% \draw[->] (1.south) -- (a5.west);
+ \draw[->] (2.south west) -- (a1.north west);
+ \draw[->] (a1.south west) -- (a2.north west);
+ \draw[->] (a2.south west) -- (a3.north west);
+ %% \draw[->] (a3) -- (a4);
+ %% \draw[->] (a4) -- (a5);
+
+ \node at (-4, 3) {\parbox{4cm}{nos enredamos en una
+     recursión infinita.}};
+ \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Cláusulas de Horn}
+
+ A la vista de los ejemplos, podemos apuntar esta
+ clasificación de las cláusulas de Horn.
+ \vspace{5mm}
+
+ {\renewcommand\arraystretch{2}
+ \begin{tabular}{|rl|rl|}
+ \multicolumn{2}{c}{$+$} & \multicolumn{2}{c}{$-$}\\ \hline
+ $\sa$ & \emph{fact} & $\neg\sa$ & \emph{query}\\ \hline
+ $\neg\sb\ \lor \cdots \lor \neg\sb\ \lor\ \sa$ &
+ \emph{rule} &
+ $\neg\sa\ \lor \cdots \lor \neg\sa$ & \emph{multiple query}\\
+ $(\sb\ \land \cdots \land \sb)\ \rightarrow\ \sa$ & &
+ $\neg(\sa\ \land \cdots \land\ \sa)$ & \\ \hline
+ \end{tabular}}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Goal trees}}
+
+ Además de la notación para las cláusulas que venimos
+ utilizando, donde una consulta se traduce en una literal
+ negativa, el mecanismo de resolución SLD puede
+ representarse como un árbol de objetivos:
+
+ \begin{columns}
+ \column{.65\linewidth}
+ \begin{tikzpicture}{>=stealth}
+ \node[caja,color=naranja_muy] at (-1, 7) {\small $S$};
+ \node[caja_b] (1) at (0, 6)
+      {\small $(-)\quad\neg \fun{Mortal}(\fun s)$};
+ \node[caja_b] (2) at (0, 5)
+      {\small $\neg\fun{Hombre}(x) \lor \fun{Mortal}(x)$};
+ \node[caja_b] (3) at (0, 4)
+      {\small $\fun{Hombre}(\fun s)$};
+ \draw[color=naranja_muy] (0.2,3.5) -- (0.2,6.5);
+ \node (a1) at (1.5, 5)
+      {\small $\neg \fun{Hombre}(\fun s)$};
+ \node (a2) at (1.5, 4)
+      {\small $\false$};
+ \draw[->] (1) -| (a1);
+ \draw[->] (2) -- (a1);
+ \draw[->] (a1) -- (a2);
+ \draw[->] (3) -- (a2);
+ \end{tikzpicture}
+ \column{.3\linewidth}
+ \vspace{7mm}
+
+ \begin{tikzpicture}{>=stealth}
+ \node (1) at (0, 6)
+      {\small $\fun{Mortal}(\fun s)$};
+ \node (2) at (0, 5)
+      {\small $\fun{Hombre}(\fun s)$};
+ \node (3) at (0, 4)
+      {\small $\checkmark$};
+ \draw[->] (1) -- (2);
+ \draw[->] (2) -- (3);
+ \end{tikzpicture}
+ \end{columns}
+
+ \hyperlink{ejemplos}{\beamerreturnbutton{Índice}}
+ \hypertarget{socrates}{}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Goal trees}}
+
+ Además de la notación para las cláusulas que venimos
+ utilizando, donde una consulta se traduce en una literal
+ negativa, el mecanismo de resolución SLD puede
+ representarse como un árbol de objetivos:
+
+ \begin{columns}
+ \column{.65\linewidth}
+ \begin{tikzpicture}{>=stealth}
+ % \node[caja,color=naranja_muy] at (-1, 7) {\small $S$};
+ \node[caja_b] (1) at (0, 6)
+      {\small $(-)\quad\neg \fun{jabón}$};
+ \node[caja_b] (2) at (0, 5)
+      {\small $\neg\fun{sebo} \lor \neg\fun{KOH} \lor
+               \fun{jabón}$};
+ \node[caja_b] (3) at (0, 4)
+      {\small $\neg\fun{ceniza} \lor \neg\fun{agua} \lor
+               \fun{KOH}$};
+ \node[caja_b] (4) at (0, 3)
+      {\small $\fun{agua}$};
+ \node[caja_b] (5) at (0, 2)
+      {\small $\fun{sebo}$};
+ \node[caja_b] (6) at (0, 1)
+      {\small $\fun{ceniza}$};
+ \draw[color=naranja_muy] (0.2,.5) -- (0.2,6.5);
+ \node[caja_d] (a1) at (.5, 5)
+      {\small $\neg\fun{sebo} \lor \neg\fun{KOH}$};
+ \node[caja_d] (a2) at (.5, 4)
+      {\small $\neg\fun{sebo} \lor \neg\fun{ceniza} \lor
+               \neg\fun{agua}$};
+ \node[caja_d] (a3) at (.5, 3)
+      {\small $\neg\fun{sebo} \lor \neg\fun{ceniza}$};
+ \node[caja_d] (a4) at (.5, 2)
+      {\small $\neg\fun{ceniza}$};
+ \node[caja_d] (a5) at (.5, 1)
+      {\small $\false$};
+ \draw[->] (1) -| (a1.north west);
+ \draw[->] (2) -- (a1);
+ \draw[->] (a1.south west) -- (a2.north west);
+ \draw[->] (3) -- (a2);
+ \draw[->] (a2.south west) -- (a3.north west);
+ \draw[->] (4) -- (a3);
+ \draw[->] (a3.south west) -- (a4.north west);
+ \draw[->] (5) -- (a4);
+ \draw[->] (a4.south west) -- (a5.north west);
+ \draw[->] (6) -- (a5);
+ \end{tikzpicture}
+ \column{.3\linewidth}
+ % \vspace{5mm}
+
+ \begin{tikzpicture}{>=stealth}
+ \node (0) at (0, 5) {\phantom{a}};
+ \node (1) at (2, 7)
+      {\small $\fun{jabón}$};
+ \node (2) at (1.3, 5)
+      {\small $\fun{sebo}$};
+ \node (3) at (2.5, 5)
+      {\small $\fun{potasa}$};
+ \node (4) at (1.5, 3)
+      {\small $\fun{ceniza}$};
+ \node (5) at (3, 3)
+      {\small $\fun{agua}$};
+ \node (a2) at (1.3, 4.5) {$\checkmark$};
+ \node (a4) at (1.5, 2.5) {$\checkmark$};
+ \node (a5) at (3, 2.5) {$\checkmark$};
+ \draw[->] (1) -- (2);
+ \draw[->] (1) -- (3);
+ \draw[->] (3) -- (4);
+ \draw[->] (3) -- (5);
+ \end{tikzpicture}
+ \end{columns}
+
+ \hyperlink{ejemplos}{\beamerreturnbutton{Índice}}
+ \hypertarget{sebo}{}
+\end{frame}
+
+\def\casa{\mbox{\Large\fontspec{Symbola}🏠}}
+\def\bus{\mbox{\Large\fontspec{Symbola}🚌}}
+\def\taxi{\mbox{\Large\fontspec{Symbola}🚕}}
+\def\pata{\mbox{\Large\fontspec{Symbola}🚶}}
+\def\bici{\mbox{\Large\fontspec{Symbola}🚲}}
+
+\begin{frame}[t]
+ \frametitle{\emph{Goal trees}}
+
+ Además de la notación para las cláusulas que venimos
+ utilizando, donde una consulta se traduce en una literal
+ negativa, el mecanismo de resolución SLD puede
+ representarse como un árbol de objetivos:
+
+ \begin{columns}
+ \column{.65\linewidth}
+ \begin{tikzpicture}{>=stealth}
+ % \node[caja,color=naranja_muy] at (-1, 7) {\small $S$};
+ \node[caja_b] (1) at (0, 6)
+      {$(-)\quad\neg\casa$};
+ \node[caja_b] (2) at (0, 5)
+      {$\neg\bus \lor \casa$};
+ \node[caja_b] (3) at (0, 4)
+      {$\neg\taxi \lor \casa$};
+ \node[caja_b] (4) at (0, 3)
+      {$\neg\pata \lor \casa$};
+ \node[caja_b] (5) at (0, 2)
+      {$\neg\bici \lor \casa$};
+ \node[caja_b] (5) at (0, 1)
+      {$\bus$};
+
+ \draw[color=naranja_muy] (0.2,.5) -- (0.2,6.5);
+ \node (a1) at (1.5, 5)
+      {\small $\neg\bus$};
+ \node (a2) at (1.5, 1)
+      {\small $\false$};
+ \draw[->] (1) -| (a1);
+ \draw[->] (2) -- (a1);
+ \draw[->] (a1) -- (a2);
+ \draw[->] (5) -- (a2);
+ \end{tikzpicture}
+ \column{.3\linewidth}
+ % \vspace{7mm}
+
+ \begin{tikzpicture}{>=stealth}
+ \node (1a) at (0, 6)
+      {$\casa$};
+ \node (2a) at (0, 5)
+      {$\bus$};
+ \node (3a) at (0, 4)
+      {\small $\checkmark$};
+ \node (1b) at (2, 6)
+      {$\casa$};
+ \node (2b) at (2, 5)
+      {$\taxi$};
+ \node (1c) at (0, 2)
+      {$\casa$};
+ \node (2c) at (0, 1)
+      {$\pata$};
+ \node (1d) at (2, 2)
+      {$\casa$};
+ \node (2d) at (2, 1)
+      {$\bici$};
+
+ \draw[->] (1a) -- (2a);
+ \draw[->] (2a) -- (3a);
+ \draw[->] (1b) -- (2b);
+ \draw[->] (1c) -- (2c);
+ \draw[->] (1d) -- (2d);
+ \end{tikzpicture}
+ \end{columns}
+
+ \hyperlink{ejemplos}{\beamerreturnbutton{Índice}}
+ \hypertarget{casa}{}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Restricción}
+
+ Al restringir la sentencias lógicas que manejamos, perdemos
+ la capacidad de tratar deducciones sencillas como esta:
+
+ \[\begin{array}{rcl}
+   p & \rightarrow & q\\
+   \neg p & \rightarrow & q\\ \hline
+   && q
+ \end{array}\]
+\vspace{5mm}
+
+ La segunda implicación no es una cláusula de Horn.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Implicaciones direccionales}
+
+ \only<-2>{
+ Las tres sentencias siguientes son semánticamente
+ equivalentes: dicen lo mismo con formas distintas.
+
+ \[\begin{array}{rcl}
+   p & \rightarrow & q\\
+   \neg p & \lor & q\\
+   \neg q & \rightarrow & \neg p
+ \end{array}\]}
+
+ \only<2>{
+ Una estrategia para enfocar el uso computacional de una
+ implicación consiste en «direccionarla»,\\
+ \hfill\parbox{.9\linewidth}{admitiendo una
+ sola de sus dos vías de utilización.}}
+
+ \only<3>{
+ En el contexto de los sistemas expertos, se utiliza el
+ símbolo $\Rightarrow$ para indicar esa direccionalidad:
+ \[\fun{Hombre}(x) \Rightarrow \fun{Mortal}(x).\]
+ }
+
+ \only<2->{
+ \begin{textblock}{12.5}(1.2,11)
+ Así, por ejemplo, la implicación {\color{naranja_muy}
+   $\fun{Hombre}(x) \rightarrow \fun{Mortal}(x)$} se
+ utilizaría para deducir
+ {\color{naranja_muy}$\fun{Mortal}(\fun a)$} a partir de
+ {\color{naranja_muy}$\fun{Hombre}(\fun a)$},\\[1mm]
+ \hfill\parbox{.9\linewidth}{dejando de lado su potencial
+   aplicación para deducir que alguien no es hombre si se
+   observa que sobrevive a una caída de doce pisos.}
+ \end{textblock}}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Backward chaining}}
+
+ En los últimos ejemplos,
+ \begin{itemize}
+ \item
+ Se parte de una consulta (\emph{query}) u objetivo:
+ \[\fun{Mortal}(s),\quad
+  \fun{Apellida}(\fun{pedro}, \fun{pérez}).\]
+ \item
+ Esta consulta se traduce en una cláusula negativa de la que
+ arranca la resolución SLD.
+ \only<2->{
+ \item
+ Las cláusulas positivas de la base de conocimiento se
+ emplean como implicaciones direccionales ({\bf reglas}):
+ \[\neg\sa \lor \cdots \lor \neg\sa \lor q\qquad\qquad
+ \big(\sa \land \cdots \land \sa\big) \Rightarrow q.\]
+ Para demostrar el objetivo (\emph{goal}) $q$, se
+ intentan resolver todos los objetivos $\sa,\ldots,\sa$.}
+ \only<3->{
+ \item
+ Un objetivo queda resuelto si viene afirmado por un
+ {\bf\emph{fact}} de la base de conocimiento ($\sa$, que es
+ $\true\rightarrow\sa$).}
+ \end{itemize}
+
+  %% {\small Para demostrar $\fun{Mortal}(s)$, bastará tener
+  %% $\fun{Hombre}(s)$.\vspace{2mm}
+
+  %% Para demostrar $\fun{Apll}(\fun{pedro}, \fun{pérez})$,
+  %% bastará tener $\fun{Apll}(\fun p(\fun{pedro}),
+  %% \fun{pérez})$.}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Backward chaining}}
+
+ Este esquema avanza desde la consecuencia de una
+ implicación direccional hacia sus
+ antecedentes,\\ \hfill\parbox{.9\linewidth}{\small
+   retrotrayéndose hasta conseguir (o no) demostrarla.}
+ \vspace{3mm}
+
+ Se denomina {\bf backward chaining}.
+ \vspace{5mm}
+
+ \pause
+
+ Típicamente, se corresponde con un sistema que toma un
+ objetivo como entrada (\emph{goal-directed}), tratando de
+ encontrar en la base de conocimiento datos
+ (\emph{facts}) que lo sostengan.
+ \vspace{5mm}
+
+ %% \pause
+
+ %% {\small También en el caso típico,} desencadena una {\bf
+ %%   búsqueda en profundidad} en la base de conocimiento.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Prolog}
+
+ Prolog es un lenguaje de programación basado en la
+ resolución SLD y \emph{backward chaining}:
+ \vspace{5mm}
+
+ \begin{itemize}
+ \item
+ Creado por % Kowalski
+ {\sc A. Colmerauer} y {\sc Ph. Roussel} en 1972.
+ \item
+ Utiliza la {\bf programación lógica} (un tipo de
+ programación declarativa).\vspace{2mm}
+
+ \hfill\parbox{.9\linewidth}
+ {\small No se trata de un lenguaje declarativo \emph{puro}:
+   es necesario tener en cuenta su comportamiento
+   procedimental.}\vspace{3mm}
+
+ \item
+ La especificación de la tarea determina el mecanismo para
+ llevarla a cabo.\vspace{2mm}
+
+  \hfill\parbox{.9\linewidth}
+ {\small Aunque distintas maneras de escribir la misma
+   especificación lógica dan lugar a resultados radicalmente
+   distintos.}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Prolog}
+ Un programa consiste en una serie de {\bf reglas}:
+
+ \[\texttt{Head} \Leftarrow \texttt{body}.\]
+
+ La cabeza se interpreta como un objetivo que se alcanzará
+ si se pueden verificar los requisitos del otro término.
+
+ Además, en el programa se pueden establecer
+ {\bf\emph{facts}}:
+
+ \begin{center}
+ \begin{minipage}[t]{.42\linewidth}
+ \VerbatimInput
+ %% [frame=lines, label=01\_socrates.py, framesep=4mm,
+ %% fontsize=\small]
+ {\cod/01_socrates.pl}
+ \end{minipage}
+ \end{center}
+
+ La última línea equivale a
+
+ % \begin{center}
+ % \begin{minipage}[t]{.42\linewidth}
+ % \VerbatimInput
+ % %% [frame=lines, label=01\_socrates.py, framesep=4mm,
+ % %% fontsize=\small]
+ % {01_socrates_bis.pl}
+ % \end{minipage}
+ % \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Prolog}
+
+ \hypertarget{ejemplos}{}
+ Algunos ejemplos:
+ \vspace{5mm}
+
+ \hspace{2cm}
+ \begin{tabular}{rl}
+ \hyperlink{socrates}{\beamergotobutton{Sócrates es mortal}}\\
+ \hyperlink{sebo}{\beamergotobutton{Saponificación}}\\
+ \hyperlink{apellidos}{\beamergotobutton{Patronímico}}&
+ $\longrightarrow$ \small orden de las líneas del código\\
+ \hyperlink{casa}{\beamergotobutton{Volver a casa}}\\
+ \end{tabular}
+\end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Backward chaining}}
+
+ Opera de esta manera el sistema {\bf GNU make}, que se
+ emplea para compilar programas con una estructura compleja.
+ \vspace{5mm}
+
+ Los ficheros {\bf \texttt{Makefile}} están formados por
+ \emph{reglas} que indican cómo generar un fichero objetivo
+ (\emph{target}) y de qué ficheros (\emph{prerequisites})
+ depende.
+
+ \VerbatimInput{\cod/01_Makefile}
+
+ Así, cuando se le pide construir o reconstruir cierto
+ \emph{target}, \emph{make} comprueba sus
+ prerrequisitos. Cada uno de ellos se construye,
+ recursivamente, si falta o su fecha de modificación es
+ anterior a la de alguno de los ficheros de los que depende.
+\end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Forward chaining}}
+
+ Se conoce como \emph{forward chaining} la estrategia
+ opuesta al \emph{backward chaining}.
+ \vspace{3mm}
+
+ Se procede desde los \emph{asertos} conocidos hacia sus
+ consecuencias, siguiendo el sentido de las implicaciones
+ direccionales: {\bf \emph{data-directed}} en vez de
+ \emph{goal-directed}.
+ \vspace{3mm}
+
+ Así, en vez de obtener objetivos o hipótesis intermedias,
+ se trabaja con conclusiones intermedias.
+ \vspace{5mm}
+
+ \pause
+
+ Este esquema no se corresponde con el método de resolución.
+ \vspace{3mm}
+
+ En particular, no persigue un objetivo concreto, sino que
+ va calculando todo lo que se deriva de los datos de
+ partida.
+ %% \vspace{3mm}
+
+ %% Puede configurarse como una {\bf búsqueda en anchura}.
+\end{frame}
+
+\begin{frame}
+\centerline{\emph{Sistemas de producción}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ {\bf Sistema experto:} trata de emular a un experto humano.
+ \vspace{4mm}
+
+ Se ha tratado [{\sc A. Newell} y {\sc H. Simon}, 1972] de
+ modelizar el proceso de una persona para obtener
+ conclusiones como\\[2mm] \hfill\parbox{.85\linewidth}{la
+   aplicación de múltiples reglas sencillas, que forman su
+   {\bf base de conocimiento}.}
+ \[\mbox{se oye un ladrido}
+   \ \Rightarrow\ 
+   \mbox{debe de ser un perro.}\]
+
+ \pause
+
+ Un {\bf sistema de producción} es un sistema experto
+ basado en reglas de producción.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Sistemas de producción}
+
+ Al estudiar la derivación SLD y Prolog,\\[2mm]
+ \hfill\parbox{.85\linewidth}{hemos reunido con un
+   tratamiento uniforme los conceptos de \emph{facts} y
+   \emph{rules}.}
+ \vspace{4mm}
+
+ Ahora hacemos una distinción marcada entre
+ \begin{itemize}
+ \item
+ la {\bf base de conocimiento} compuesta por las reglas con
+ las que contamos y
+ \item
+ la {\bf \emph{working memory}} (volátil) con los
+ \emph{facts} que manejamos en un determinado momento.
+ \end{itemize}
+ \vspace{4mm}
+
+ \pause
+
+ Un sistema de producción opera mediante \emph{forward
+   chaining},\\[2mm]
+ \hfill\parbox{.85\linewidth}{aplicando las reglas que
+   disparen los \emph{facts},}\\[2mm]
+ \hfill\parbox{.7\linewidth}{hasta que ya no pueda aplicarse
+   ninguna.}\\[2mm]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Esta estructura se ajusta al modelo cognitivo de {\sc
+   A. Newell} y {\sc H. Simon}{\small, utilizando reglas de
+ producción para representar el conocimiento.}
+ \vspace{7mm}
+
+ {\renewcommand\arraystretch{1.5}
+ \begin{minipage}[t]{.35\linewidth}
+ \begin{tabular}{|l|} \hline
+ memoria a largo plazo  \\ \hline
+ memoria a corto plazo  \\ \hline
+ procesador cognitivo  \\ \hline
+ \end{tabular}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.6\linewidth}
+ \begin{tabular}{|ll|} \hline
+ base de conocimiento & (reglas) \\ \hline
+ \emph{working memory} & (datos) \\ \hline
+ motor de inferencia & \\ \hline
+ \end{tabular}
+ \end{minipage}}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅰ}}
+
+ \begin{minipage}[t]{.42\linewidth}
+ \VerbatimInput{\cod/01_socrates_01.clp}
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_socrates_02.txt}
+ \end{minipage}
+%%  \vspace{4mm}
+%% \pause
+
+%%  La regla se ejecuta una sola vez, aunque la condición que
+%%  la dispara sigue presente:\\[1mm]
+%%  \hfill\parbox{.85\linewidth}{para evitar bucles, las reglas
+%%    son \emph{refractarias} (\emph{refractory}).}
+\end{frame}
+
+\begin{frame}
+ \frametitle{CLIPS}
+
+ El ejemplo anterior está escrito en {\bf CLIPS} (\emph{C
+   Language Integrated Production System}),\\[2mm]
+ \hfill\parbox{.85\linewidth}{\small una herramienta de
+   desarrollo de sistemas expertos.}
+ \vspace{5mm}
+
+ Su sintaxis se basa en la de {\bf LISP} ({\small lenguaje
+   de programación funcional por antonomasia}), que tiene
+ gran ascendiente sobre la inteligencia artificial.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅰ}}
+
+ \begin{minipage}[t]{.42\linewidth}
+ \VerbatimInput{\cod/01_socrates_01.clp}
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_socrates_02.txt}
+ \end{minipage}
+ \vspace{4mm}
+
+ La regla se ejecuta una sola vez, aunque la condición que
+ la dispara sigue presente:\\[1mm]
+ \hfill\parbox{.85\linewidth}{para evitar bucles, las reglas
+   son \emph{refractarias} (\emph{refractory}).}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅱ}}
+
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput{\cod/01_grafo_09.clp}
+ \end{minipage}\hfill % \vline\hfill
+ \begin{minipage}[t]{.42\linewidth}
+ \truca
+ \includegraphics{\figs/01_fig_00\sufijo}
+ \end{minipage}
+ \vspace{5mm}
+
+ La \emph{refracción} no impide que una regla se dispare
+ varias veces, en base a distintos \emph{facts}.
+ \vspace{2mm}
+ \pause
+
+ {\small Para comprobar si una pareja concreta de nodos
+   están conectados, es más conveniente el método de
+   \emph{backward chaining} que hemos visto.}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅲ}}
+
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput{\cod/01_grafo_10.clp}
+ \end{minipage}\hfill % \vline\hfill
+ \begin{minipage}[t]{.42\linewidth}
+ \truca
+ \includegraphics{\figs/01_fig_00\sufijo}
+ \end{minipage}
+ \vspace{5mm}
+
+ \only<1>{
+ Este sistema de \emph{forward chaining}, en cambio, resulta
+ muy conveniente para calcular todos los vértices de una
+ componente conexa.}
+ \only<2>{
+ Si las dos condiciones del antecedente estuvieran en el orden inverso, el proceso sería menos eficiente.}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reglas de producción}
+
+ Una {\bf regla de producción} (o simplemente {\bf
+   producción}) consta de
+ \begin{itemize}
+ \item \underline{Antecedente}\hfill
+  (\emph{left-hand side (LHS)}, terminología de CLIPS)\\[2mm]
+
+ Sucesión de elementos condicionales,\\[1mm]
+ \hfill\parbox{.85\linewidth}{que se combinan mediante {\bf
+     conjunción}.}\\[2mm]
+
+ El elemento condicional típico es\\[1mm]
+ \hfill\parbox{.85\linewidth}{un patrón ({\bf \emph{pattern}})
+   al que debe amoldarse algún \emph{fact}.}
+ \vspace{5mm}
+
+ \item \underline{Consecuente}\hfill
+  (\emph{right-hand side (RHS)}, terminología de CLIPS)\\[2mm]
+
+ Sucesión de \emph{acciones}.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reglas de producción}
+
+ Las acciones del consecuente se ejecutan sucesivamente,
+ como en programación procedimental.
+ \vspace{5mm}
+
+ De acuerdo con la naturaleza dinámica de la \emph{working
+   memory}, las siguientes son acciones típicas:
+
+ \begin{itemize}
+ \item añadir un \emph{fact},\\
+ \hspace{1.5cm}\texttt{(assert (ejemplo))}
+ \item eliminarlo,\\
+ \hspace{1.5cm}\texttt{(retract (ejemplo))}
+ \item o modificarlo.\\
+ \hspace{1.5cm}\texttt{(modify <n.º de fact> (campo nuevo\_valor))}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
+
+ \hspace{-1cm}
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+                frame=single]
+   {\cod/01_numerico.txt}
+
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_bis.clp}
+ \end{minipage}
+ \vspace{5mm}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Cada una de las reglas de producción funciona
+ independientemente de las demás,\vspace{3mm}
+
+ sobre unos datos (\emph{working memory}) comunes a todas.
+ \vspace{1cm}
+
+ Se puede establecer una analogía con un
+ {\bf\color{naranja_muy} programa paralelo},\vspace{3mm}
+
+ aunque las reglas se disparan de una en una.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ El \underline{ciclo de funcionamiento} de un sistema de
+ producción consta de tres pasos:
+
+ \begin{itemize}
+ \item {\bf identificar} las reglas aplicables,
+ \vspace{1mm}
+
+ \uncover<2->{
+ \hfill\parbox{.85\linewidth}
+ {Se {\bf activan} las reglas cuyos antecedentes se
+   satisfagan (según los \emph{facts} de la \emph{working
+     memory}).
+ \vspace{3mm}
+
+ CLIPS coloca estas activaciones en la \emph{agenda}.}}
+ \vspace{3mm}
+
+ \item escoger una de ellas y
+ \vspace{1mm}
+
+ \uncover<3->{
+ \hfill\parbox{.85\linewidth}
+ {Si hay varias activaciones, se recurre a un mecanismo de
+   resolución de conflictos.}}
+ \vspace{3mm}
+
+ \item {\bf ejecutarla} (\emph{fire it}).
+ \vspace{1mm}
+
+ \uncover<4>{
+ \hfill\parbox{.85\linewidth}
+ {Esto produce cambios en la \emph{working memory}.
+  \vspace{3mm}
+
+  Si se retira o modifica algún \emph{fact} que hubiera
+  activado alguna de regla {\small aún no «disparada»},}
+  \vspace{1mm}
+
+ \hfill\parbox{.75\linewidth}
+ {se elimina de la agenda esa activación.}}
+ \end{itemize}
+\end{frame}
+
+%% \begin{frame}
+%%  \frametitle{Sistemas de producción}
+
+%%  % Programación paralela
+%% \end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Pattern matching}}
+
+ El \underline{cuello de botella} de un sistema experto se
+ localiza en la identificación de las reglas que procede
+ activar.
+ \vspace{3mm}
+
+ Estos sistemas consideran muchos \emph{facts} y muchas
+ reglas a la vez.
+ \vspace{3mm}
+
+ En cada paso del ciclo, debe comprobarse
+ si alguna combinación nueva de \emph{facts} casa con el
+ antecedente de cada una de las reglas.
+ \vspace{5mm}
+
+ \pause
+
+ La invención del algoritmo {\color{naranja_muy} \bf Rete}
+ [\textsc{Ch. Forgy}, 1982] para el sistema OPS5 marcó un
+ hito decisivo para los sistemas de producción.
+ \vspace{3mm}
+
+ Este algoritmo aprovecha
+ \begin{itemize}
+ \item
+ que son pocos los cambios en la \emph{working memory} de
+ una etapa a la siguiente y
+ \vspace{3mm}
+
+ \item
+ que reglas distintas pueden compartir condiciones en sus antecedentes.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Rete}
+
+ La idea básica consiste en llevar un registro, en todo
+ momento, del «punto» de satisfacción de los antecedentes de
+ las reglas,\\[2mm] \hfill\parbox{.85\linewidth} {en vez de
+   comprobar todas las condiciones cada vez que se modifica
+   la \emph{working memory}.}
+ \vspace{4mm}
+
+ \pause
+
+ Esas condiciones se organizan en una red.
+ \vspace{2mm}
+
+ \begin{itemize}
+ \item Está compuesta por nodos de dos tipos:
+ \begin{itemize}
+ \item[\color{naranja_muy}α)] Admiten los «facts» que cumplan cierta condición.
+ \item[\color{naranja_muy}β)] Imponen condiciones que involucran a varios «facts».
+ \end{itemize}
+ \vspace{2mm}
+
+ \item Cada \emph{fact} que se añade a la \emph{working
+   memory} recorre la red hasta donde alcanza.
+ \vspace{2mm}
+ \item Si se modifica alguno, puede que avance\\[1mm]
+ \hfill\parbox{.9\linewidth}{\small (o
+   que tenga que retroceder por dejar de cumplir alguna
+   condición).}
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Rete}
+
+ Valgan como ejemplo estas instrucciones para los
+ cantes del guiñote:
+ \vspace{5mm}
+
+\def\retea{{\color{naranja_muy}α}\color{frente}}
+\def\reteb{{\color{naranja_muy}β}\color{frente}}
+
+ \begin{tikzpicture}[>=stealth]
+ \node (a1) at (0,8) {\retea:};
+ \node[right of=a1, node distance=2mm, anchor=west] (b1)
+        {tenemos un rey};
+ \node (a2) at (5,8) {\retea:};
+ \node[right of=a2, node distance=2mm, anchor=west] (b2)
+        {tenemos una sota};
+ \node (a3) at (2.5,6.5) {\reteb:};
+ \node[right of=a3, node distance=2mm, anchor=west] (b3)
+        {del mismo palo ($X$)};
+ \node (a4) at (-1,4.5) {\retea:};
+ \node[right of=a4, node distance=2mm, anchor=west] (b4)
+        {baza ganada};
+ \node (a5) at (7.5, 6) {\retea:};
+ \node[right of=a5, node distance=2mm, anchor=west] (b5)
+        {pintan $Y$};
+ \node (a6) at (2.5,4.5) {\reteb:};
+ \node[right of=a6, node distance=2mm, anchor=west] (b6)
+        {$X = Y$};
+ \node (a7) at (7,4.5) {\reteb:};
+ \node[right of=a7, node distance=2mm, anchor=west] (b7)
+        {$X \neq Y$};
+ \node (r6) at (2.5,3) {REGLA};
+ \node[draw, right of=r6, node distance=8mm, anchor=west]
+        (br6)
+        {\texttt{cantar 40}};
+ \node (r7) at (7,3) {REGLA};
+ \node[draw, right of=r7, node distance=8mm, anchor=west]
+        (br7)
+        {\texttt{cantar 20}};
+
+ \draw[->, shorten >=1mm] (a1.south) -- (a3.north);
+ \draw[->, shorten >=1mm] (a2.south) -- (a3.north);
+ \draw[->, shorten >=1mm] (a3.south) -- (a6.north);
+ \draw[->, shorten >=1mm] (a5.south) -- (a6.north);
+ \draw[->, shorten >=1mm] (a3.south) -- (a7.north);
+ \draw[->, shorten >=1mm] (a5.south) -- (a7.north);
+ \draw[->, shorten >=1mm] (a6.south) -- (r6.north);
+ \draw[->, shorten >=1mm] (a7.south) -- (r7.north);
+ \draw[->, shorten >=1mm] (a4.south) -- (r6.north);
+ \draw[->, shorten >=1mm] (a4.south) -- (r7.north);
+
+ \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Pattern matching}}
+
+ En cualquier caso, es importante el orden de los
+ antecedentes de una regla\only<1>{,\\[2mm]
+ \hfill\parbox{.95\linewidth}{ \small como muestra el
+   ejemplo de \emph{Expert Systems. Principles and
+     Programming}, de {\sc J. Giarratano} y {\sc G. Riley}
+   [sec. 11.5].}
+ \vspace{5mm}
+
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_orden_01.clp}
+ \end{minipage}
+ \hfill
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_orden_02.clp}
+ \end{minipage}
+ \vspace{5mm}
+
+% La presencia en el sistema de
+ La segunda regla es mucho más costosa computacionalmente.}%
+ \only<2->{.
+ \vspace{5mm}
+
+ En general, se pueden sugerir los siguientes criterios:
+
+ \begin{itemize}
+ \item Anteponer los patrones más específicos,\\[2mm]
+ \hfill\parbox{.8\linewidth}
+       {\small como ilustra el ejemplo anterior.}
+ \vspace{3mm}
+
+ \item<3-> Posponer los patrones de \emph{facts} volátiles.\\[2mm]
+ \hfill\parbox{.8\linewidth}
+ {\small Con esto, se consigue reducir los cambios
+   frecuentes en las concordancias parciales con los
+   antecedentes de las reglas.}
+ \vspace{3mm}
+
+ \item<4-> Anteponer los patrones que se ajustan a pocos
+   \emph{facts}.
+ \end{itemize}
+ \vspace{4mm}}
+ \uncover<4>{
+ Se trata solo de indicaciones generales: estos criterios
+ pueden ser contradictorios.}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ En la guía del usuario de CLIPS, de \textsc{J. Giarratano},
+ leemos
+ \vspace{5mm}
+
+ \hfill\parbox{.85\linewidth}
+ {\it Now you might say, “Well, I’ll just design my expert
+   system so that only one rule can possibly be activated at
+   one time. Then there is no need for conflict
+   resolution”. [...]
+   \vspace{2mm}
+
+   The bad news is that this success proves that your
+   application can be well represented by a sequential
+   program.
+   \vspace{2mm}
+
+   So you should have coded it in C, Java, or Ada in the
+   first place and not bothered writing it as an expert
+   system.}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ Una {\bf estructura de control rígida} en un sistema
+ experto\\[2mm] \hfill\parbox{.85\linewidth}{(su diseño
+   establece muchas relaciones de prioridad de unas reglas
+   con respecto a otras),}
+ \vspace{1cm}
+
+ puede revelar un programa secuencial subyacente\\[2mm]
+ \hfill\parbox{.85\linewidth}{(y la conveniencia de
+   recurrir a la programación convencional).}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ \begin{itemize}
+ \item
+ El término «producción» se encuentra en el sistema de
+ reescritura de cadenas formalizado por {\sc E. Post}
+ [1943].
+ \vspace{3mm}
+
+ Las reglas de este sistema no se organizaban bajo ninguna
+ estructura de control o priorización.
+ \vspace{7mm}
+
+ \item
+ {\sc A. Markov Jr.} [1954] propuso un sistema de producción
+ con reglas jerarquizadas linealmente,
+ \vspace{3mm}
+
+ \hfill\parbox{.9\linewidth}{\small del mismo modo que
+   prioriza Prolog las distintas alternativas para
+   satisfacer un objetivo.}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Salience}}
+
+ Una manera de decidir qué regla de la agenda ejecutar es\\[2mm] \hfill\parbox{.85\linewidth} {recurrir a una
+   prioridad explícita dada por el programador:}
+ \vspace{5mm}
+
+ \begin{minipage}{.5\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_salience.clp}
+ \end{minipage}
+ \vspace{5mm}
+
+ En CLIPS, las reglas tienen \emph{salience} \texttt{0} por
+ defecto.
+ \vspace{5mm}
+
+ En el ejemplo del cálculo numérico, hemos priorizado la
+ regla que termina el proceso.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
+
+ \hspace{-1cm}
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+                frame=single]
+   {\cod/01_numerico.txt}
+
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_ter.clp}
+ \end{minipage}
+ \vspace{5mm}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Salience}}
+
+ Leemos en el libro \emph{Expert Systems. Principles and
+   Programming}, {\sc J. Giarratano} y {\sc G. Riley}
+ [p. 453]:
+ \vspace{5mm}
+
+ \only<1>{
+ \hfill\parbox{.85\linewidth}
+ {\it People who are just learning rule-based programming tend
+   to overuse salience because it gives them explicit
+   control of execution. It is more like the procedural
+   programming they are used to [...]
+  \vspace{3mm}
+
+  Overuse of salience results in a poorly coded program. The
+  main advantage of a rule-based system is that the
+  programmer does not have to worry about controlling
+  execution.}}
+
+ \only<2>{
+ \hfill\parbox{.85\linewidth} {\it Salience should primarily be
+   used as a mechanism for determining the order in which
+   rules fire. This means that in general a rule that is
+   placed on the agenda is eventually fired. Salience should
+   not be used as a method for selecting a single rule from
+   a group of rules when patterns can be used to express the
+   criteria for selection, nor should it be used as a “quick
+   fix” to get rules to fire in the proper order.}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ Si la agenda contiene varias reglas activadas con la misma
+ \emph{salience},
+ \hfill\parbox{.85\linewidth}
+ {CLIPS se decanta por una según el criterio seleccionado:}
+
+ \begin{itemize}
+ \item {\bf\color{naranja_muy}\texttt{depth}}
+
+ \begin{minipage}[t]{.6\linewidth}
+ %% Es el mecanismo de selección por defecto. El sistema «se
+ %% concentra» en lo que está haciendo.
+ Opción por defecto. El sistema «se
+ concentra» en lo que está haciendo.
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.35\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_strategy.txt}
+ \end{minipage}
+
+ \item {\bf\color{naranja_muy}\texttt{breadth}}
+
+ Todas las reglas tienen ocasión de intervenir.
+
+ \item {\bf\color{naranja_muy}\texttt{simplicity}}
+
+ \item {\bf\color{naranja_muy}\texttt{complexity}}
+
+ Se priorizan las reglas con antecedente más específico.
+
+ \item {\bf\color{naranja_muy} ···}
+
+ \item {\bf\color{naranja_muy}\texttt{random}}
+
+ Puede ser útil para detectar problemas en el sistema.
+
+ \end{itemize}
+
+ Otro criterio de elección atiende al
+ {\bf\color{naranja_muy} orden} en que están definidas las
+ reglas (como hace Prolog).
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Resolución de conflictos\hfill\texttt{breadth}}
+
+ \hspace{-1cm}
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+                frame=single]
+   {\cod/01_numerico_b.txt}
+
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_quater.clp}
+ \end{minipage}
+ \vspace{5mm}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Esta manera de programar presenta se caracteriza por
+
+ \begin{itemize}
+ \item
+ la sencillez de sus estructuras de control y
+
+ \item
+ la transparencia de su funcionamiento\\[2mm]
+
+ (comparándola, por ejemplo, con el de las redes neuronales).
+ \end{itemize}
+ \vspace{5mm}
+
+ Facilita, además del resultado, una {\bf explicación} de la
+ cadena de deducciones que ha conducido hasta él.
+\end{frame}
+
+\end{document}
