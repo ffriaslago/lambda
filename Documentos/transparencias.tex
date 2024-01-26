@@ -1063,6 +1063,204 @@ resolvente.
 \end{frame}
 
 \begin{frame}
+\centerline{\emph{Sistemas de producción}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ {\bf Sistema experto:} trata de emular a un experto humano.
+ \vspace{4mm}
+
+ Se ha tratado [{\sc A. Newell} y {\sc H. Simon}, 1972] de
+ modelizar el proceso de una persona para obtener
+ conclusiones como\\[2mm] \hfill\parbox{.85\linewidth}{la
+   aplicación de múltiples reglas sencillas, que forman su
+   {\bf base de conocimiento}.}
+ \[\mbox{se oye un ladrido}
+   \ \Rightarrow\ 
+   \mbox{debe de ser un perro.}\]
+
+ \pause
+
+ Un {\bf sistema de producción} es un sistema experto
+ basado en reglas de producción.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Sistemas de producción}
+
+ Al estudiar la derivación SLD y Prolog,\\[2mm]
+ \hfill\parbox{.85\linewidth}{hemos reunido con un
+   tratamiento uniforme los conceptos de \emph{facts} y
+   \emph{rules}.}
+ \vspace{4mm}
+
+ Ahora hacemos una distinción marcada entre
+ \begin{itemize}
+ \item
+ la {\bf base de conocimiento} compuesta por las reglas con
+ las que contamos y
+ \item
+ la {\bf \emph{working memory}} (volátil) con los
+ \emph{facts} que manejamos en un determinado momento.
+ \end{itemize}
+ \vspace{4mm}
+
+ \pause
+
+ Un sistema de producción opera mediante \emph{forward
+   chaining},\\[2mm]
+ \hfill\parbox{.85\linewidth}{aplicando las reglas que
+   disparen los \emph{facts},}\\[2mm]
+ \hfill\parbox{.7\linewidth}{hasta que ya no pueda aplicarse
+   ninguna.}\\[2mm]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Esta estructura se ajusta al modelo cognitivo de {\sc
+   A. Newell} y {\sc H. Simon}{\small, utilizando reglas de
+ producción para representar el conocimiento.}
+ \vspace{7mm}
+
+ {\renewcommand\arraystretch{1.5}
+ \begin{minipage}[t]{.35\linewidth}
+ \begin{tabular}{|l|} \hline
+ memoria a largo plazo  \\ \hline
+ memoria a corto plazo  \\ \hline
+ procesador cognitivo  \\ \hline
+ \end{tabular}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.6\linewidth}
+ \begin{tabular}{|ll|} \hline
+ base de conocimiento & (reglas) \\ \hline
+ \emph{working memory} & (datos) \\ \hline
+ motor de inferencia & \\ \hline
+ \end{tabular}
+ \end{minipage}}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅰ}}
+
+ \begin{minipage}[t]{.42\linewidth}
+ \VerbatimInput{\cod/01_socrates_01.clp}
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_socrates_02.txt}
+ \end{minipage}
+%%  \vspace{4mm}
+%% \pause
+
+%%  La regla se ejecuta una sola vez, aunque la condición que
+%%  la dispara sigue presente:\\[1mm]
+%%  \hfill\parbox{.85\linewidth}{para evitar bucles, las reglas
+%%    son \emph{refractarias} (\emph{refractory}).}
+\end{frame}
+
+\begin{frame}
+ \frametitle{CLIPS}
+
+ El ejemplo anterior está escrito en {\bf CLIPS} (\emph{C
+   Language Integrated Production System}),\\[2mm]
+ \hfill\parbox{.85\linewidth}{\small una herramienta de
+   desarrollo de sistemas expertos.}
+ \vspace{5mm}
+
+ Su sintaxis se basa en la de {\bf LISP} ({\small lenguaje
+   de programación funcional por antonomasia}), que tiene
+ gran ascendiente sobre la inteligencia artificial.
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅰ}}
+
+ \begin{minipage}[t]{.42\linewidth}
+ \VerbatimInput{\cod/01_socrates_01.clp}
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.55\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_socrates_02.txt}
+ \end{minipage}
+ \vspace{4mm}
+
+ La regla se ejecuta una sola vez, aunque la condición que
+ la dispara sigue presente:\\[1mm]
+ \hfill\parbox{.85\linewidth}{para evitar bucles, las reglas
+   son \emph{refractarias} (\emph{refractory}).}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅱ}}
+
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput{\cod/01_grafo_09.clp}
+ \end{minipage}\hfill % \vline\hfill
+ \begin{minipage}[t]{.42\linewidth}
+ \truca
+ \includegraphics{\figs/01_fig_00\sufijo}
+ \end{minipage}
+ \vspace{5mm}
+
+ La \emph{refracción} no impide que una regla se dispare
+ varias veces, en base a distintos \emph{facts}.
+ \vspace{2mm}
+ \pause
+
+ {\small Para comprobar si una pareja concreta de nodos
+   están conectados, es más conveniente el método de
+   \emph{backward chaining} que hemos visto.}
+\end{frame}
+
+\begin{frame}[t]
+ \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅲ}}
+
+ \begin{minipage}[t]{.55\linewidth}
+ \trucavuelve
+ \VerbatimInput{\cod/01_grafo_10.clp}
+ \end{minipage}\hfill % \vline\hfill
+ \begin{minipage}[t]{.42\linewidth}
+ \truca
+ \includegraphics{\figs/01_fig_00\sufijo}
+ \end{minipage}
+ \vspace{5mm}
+
+ \only<1>{
+ Este sistema de \emph{forward chaining}, en cambio, resulta
+ muy conveniente para calcular todos los vértices de una
+ componente conexa.}
+ \only<2>{
+ Si las dos condiciones del antecedente estuvieran en el orden inverso, el proceso sería menos eficiente.}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reglas de producción}
+
+ Una {\bf regla de producción} (o simplemente {\bf
+   producción}) consta de
+ \begin{itemize}
+ \item \underline{Antecedente}\hfill
+  (\emph{left-hand side (LHS)}, terminología de CLIPS)\\[2mm]
+
+ Sucesión de elementos condicionales,\\[1mm]
+ \hfill\parbox{.85\linewidth}{que se combinan mediante {\bf
+     conjunción}.}\\[2mm]
+
+ El elemento condicional típico es\\[1mm]
+ \hfill\parbox{.85\linewidth}{un patrón ({\bf \emph{pattern}})
+   al que debe amoldarse algún \emph{fact}.}
+ \vspace{5mm}
+
+ \item \underline{Consecuente}\hfill
+  (\emph{right-hand side (RHS)}, terminología de CLIPS)\\[2mm]
+
+ Sucesión de \emph{acciones}.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
  \frametitle{Reglas de producción}
 
  Las acciones del consecuente se ejecutan sucesivamente,
@@ -1082,23 +1280,23 @@ resolvente.
  \end{itemize}
 \end{frame}
 
-\begin{frame}[t]
- \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
+% \begin{frame}[t]
+%  \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
 
- \hspace{-1cm}
- \begin{minipage}[t]{.45\linewidth}
- \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
- \end{minipage}\hfill
- \begin{minipage}[t]{.55\linewidth}
- \trucavuelve
- \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
-                frame=single]
-   {\cod/01_numerico.txt}
+%  \hspace{-1cm}
+%  \begin{minipage}[t]{.45\linewidth}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+%  \end{minipage}\hfill
+%  \begin{minipage}[t]{.55\linewidth}
+%  \trucavuelve
+%  \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+%                 frame=single]
+%    {\cod/01_numerico.txt}
 
- \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_bis.clp}
- \end{minipage}
- \vspace{5mm}
-\end{frame}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_bis.clp}
+%  \end{minipage}
+%  \vspace{5mm}
+% \end{frame}
 
 \begin{frame}
  \frametitle{Sistemas de producción}
@@ -1519,23 +1717,519 @@ resolvente.
  reglas (como hace Prolog).
 \end{frame}
 
+% \begin{frame}[t]
+%  \frametitle{Resolución de conflictos\hfill\texttt{breadth}}
+
+%  \hspace{-1cm}
+%  \begin{minipage}[t]{.45\linewidth}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+%  \end{minipage}\hfill
+%  \begin{minipage}[t]{.55\linewidth}
+%  \trucavuelve
+%  \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+%                 frame=single]
+%    {\cod/01_numerico_b.txt}
+
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_quater.clp}
+%  \end{minipage}
+%  \vspace{5mm}
+% \end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Esta manera de programar presenta se caracteriza por
+
+ \begin{itemize}
+ \item
+ la sencillez de sus estructuras de control y
+
+ \item
+ la transparencia de su funcionamiento\\[2mm]
+
+ (comparándola, por ejemplo, con el de las redes neuronales).
+ \end{itemize}
+ \vspace{5mm}
+
+ Facilita, además del resultado, una {\bf explicación} de la
+ cadena de deducciones que ha conducido hasta él.
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Reglas de producción}
+
+ Las acciones del consecuente se ejecutan sucesivamente,
+ como en programación procedimental.
+ \vspace{5mm}
+
+ De acuerdo con la naturaleza dinámica de la \emph{working
+   memory}, las siguientes son acciones típicas:
+
+ \begin{itemize}
+ \item añadir un \emph{fact},\\
+ \hspace{1.5cm}\texttt{(assert (ejemplo))}
+ \item eliminarlo,\\
+ \hspace{1.5cm}\texttt{(retract (ejemplo))}
+ \item o modificarlo.\\
+ \hspace{1.5cm}\texttt{(modify <n.º de fact> (campo nuevo\_valor))}
+ \end{itemize}
+\end{frame}
+
+% \begin{frame}[t]
+%  \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
+
+%  \hspace{-1cm}
+%  \begin{minipage}[t]{.45\linewidth}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+%  \end{minipage}\hfill
+%  \begin{minipage}[t]{.55\linewidth}
+%  \trucavuelve
+%  \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+%                 frame=single]
+%    {\cod/01_numerico.txt}
+
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_bis.clp}
+%  \end{minipage}
+%  \vspace{5mm}
+% \end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ Cada una de las reglas de producción funciona
+ independientemente de las demás,\vspace{3mm}
+
+ sobre unos datos (\emph{working memory}) comunes a todas.
+ \vspace{1cm}
+
+ Se puede establecer una analogía con un
+ {\bf\color{naranja_muy} programa paralelo},\vspace{3mm}
+
+ aunque las reglas se disparan de una en una.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Sistemas de producción}
+
+ El \underline{ciclo de funcionamiento} de un sistema de
+ producción consta de tres pasos:
+
+ \begin{itemize}
+ \item {\bf identificar} las reglas aplicables,
+ \vspace{1mm}
+
+ \uncover<2->{
+ \hfill\parbox{.85\linewidth}
+ {Se {\bf activan} las reglas cuyos antecedentes se
+   satisfagan (según los \emph{facts} de la \emph{working
+     memory}).
+ \vspace{3mm}
+
+ CLIPS coloca estas activaciones en la \emph{agenda}.}}
+ \vspace{3mm}
+
+ \item escoger una de ellas y
+ \vspace{1mm}
+
+ \uncover<3->{
+ \hfill\parbox{.85\linewidth}
+ {Si hay varias activaciones, se recurre a un mecanismo de
+   resolución de conflictos.}}
+ \vspace{3mm}
+
+ \item {\bf ejecutarla} (\emph{fire it}).
+ \vspace{1mm}
+
+ \uncover<4>{
+ \hfill\parbox{.85\linewidth}
+ {Esto produce cambios en la \emph{working memory}.
+  \vspace{3mm}
+
+  Si se retira o modifica algún \emph{fact} que hubiera
+  activado alguna de regla {\small aún no «disparada»},}
+  \vspace{1mm}
+
+ \hfill\parbox{.75\linewidth}
+ {se elimina de la agenda esa activación.}}
+ \end{itemize}
+\end{frame}
+
+%% \begin{frame}
+%%  \frametitle{Sistemas de producción}
+
+%%  % Programación paralela
+%% \end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Pattern matching}}
+
+ El \underline{cuello de botella} de un sistema experto se
+ localiza en la identificación de las reglas que procede
+ activar.
+ \vspace{3mm}
+
+ Estos sistemas consideran muchos \emph{facts} y muchas
+ reglas a la vez.
+ \vspace{3mm}
+
+ En cada paso del ciclo, debe comprobarse
+ si alguna combinación nueva de \emph{facts} casa con el
+ antecedente de cada una de las reglas.
+ \vspace{5mm}
+
+ \pause
+
+ La invención del algoritmo {\color{naranja_muy} \bf Rete}
+ [\textsc{Ch. Forgy}, 1982] para el sistema OPS5 marcó un
+ hito decisivo para los sistemas de producción.
+ \vspace{3mm}
+
+ Este algoritmo aprovecha
+ \begin{itemize}
+ \item
+ que son pocos los cambios en la \emph{working memory} de
+ una etapa a la siguiente y
+ \vspace{3mm}
+
+ \item
+ que reglas distintas pueden compartir condiciones en sus antecedentes.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Rete}
+
+ La idea básica consiste en llevar un registro, en todo
+ momento, del «punto» de satisfacción de los antecedentes de
+ las reglas,\\[2mm] \hfill\parbox{.85\linewidth} {en vez de
+   comprobar todas las condiciones cada vez que se modifica
+   la \emph{working memory}.}
+ \vspace{4mm}
+
+ \pause
+
+ Esas condiciones se organizan en una red.
+ \vspace{2mm}
+
+ \begin{itemize}
+ \item Está compuesta por nodos de dos tipos:
+ \begin{itemize}
+ \item[\color{naranja_muy}α)] Admiten los «facts» que cumplan cierta condición.
+ \item[\color{naranja_muy}β)] Imponen condiciones que involucran a varios «facts».
+ \end{itemize}
+ \vspace{2mm}
+
+ \item Cada \emph{fact} que se añade a la \emph{working
+   memory} recorre la red hasta donde alcanza.
+ \vspace{2mm}
+ \item Si se modifica alguno, puede que avance\\[1mm]
+ \hfill\parbox{.9\linewidth}{\small (o
+   que tenga que retroceder por dejar de cumplir alguna
+   condición).}
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Rete}
+
+ Valgan como ejemplo estas instrucciones para los
+ cantes del guiñote:
+ \vspace{5mm}
+
+\def\retea{{\color{naranja_muy}α}\color{frente}}
+\def\reteb{{\color{naranja_muy}β}\color{frente}}
+
+ \begin{tikzpicture}[>=stealth]
+ \node (a1) at (0,8) {\retea:};
+ \node[right of=a1, node distance=2mm, anchor=west] (b1)
+        {tenemos un rey};
+ \node (a2) at (5,8) {\retea:};
+ \node[right of=a2, node distance=2mm, anchor=west] (b2)
+        {tenemos una sota};
+ \node (a3) at (2.5,6.5) {\reteb:};
+ \node[right of=a3, node distance=2mm, anchor=west] (b3)
+        {del mismo palo ($X$)};
+ \node (a4) at (-1,4.5) {\retea:};
+ \node[right of=a4, node distance=2mm, anchor=west] (b4)
+        {baza ganada};
+ \node (a5) at (7.5, 6) {\retea:};
+ \node[right of=a5, node distance=2mm, anchor=west] (b5)
+        {pintan $Y$};
+ \node (a6) at (2.5,4.5) {\reteb:};
+ \node[right of=a6, node distance=2mm, anchor=west] (b6)
+        {$X = Y$};
+ \node (a7) at (7,4.5) {\reteb:};
+ \node[right of=a7, node distance=2mm, anchor=west] (b7)
+        {$X \neq Y$};
+ \node (r6) at (2.5,3) {REGLA};
+ \node[draw, right of=r6, node distance=8mm, anchor=west]
+        (br6)
+        {\texttt{cantar 40}};
+ \node (r7) at (7,3) {REGLA};
+ \node[draw, right of=r7, node distance=8mm, anchor=west]
+        (br7)
+        {\texttt{cantar 20}};
+
+ \draw[->, shorten >=1mm] (a1.south) -- (a3.north);
+ \draw[->, shorten >=1mm] (a2.south) -- (a3.north);
+ \draw[->, shorten >=1mm] (a3.south) -- (a6.north);
+ \draw[->, shorten >=1mm] (a5.south) -- (a6.north);
+ \draw[->, shorten >=1mm] (a3.south) -- (a7.north);
+ \draw[->, shorten >=1mm] (a5.south) -- (a7.north);
+ \draw[->, shorten >=1mm] (a6.south) -- (r6.north);
+ \draw[->, shorten >=1mm] (a7.south) -- (r7.north);
+ \draw[->, shorten >=1mm] (a4.south) -- (r6.north);
+ \draw[->, shorten >=1mm] (a4.south) -- (r7.north);
+
+ \end{tikzpicture}
+
+\end{frame}
+
 \begin{frame}[t]
- \frametitle{Resolución de conflictos\hfill\texttt{breadth}}
+ \frametitle{\emph{Pattern matching}}
 
- \hspace{-1cm}
+ En cualquier caso, es importante el orden de los
+ antecedentes de una regla\only<1>{,\\[2mm]
+ \hfill\parbox{.95\linewidth}{ \small como muestra el
+   ejemplo de \emph{Expert Systems. Principles and
+     Programming}, de {\sc J. Giarratano} y {\sc G. Riley}
+   [sec. 11.5].}
+ \vspace{5mm}
+
  \begin{minipage}[t]{.45\linewidth}
- \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
- \end{minipage}\hfill
- \begin{minipage}[t]{.55\linewidth}
- \trucavuelve
- \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
-                frame=single]
-   {\cod/01_numerico_b.txt}
-
- \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_quater.clp}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_orden_01.clp}
+ \end{minipage}
+ \hfill
+ \begin{minipage}[t]{.45\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_orden_02.clp}
  \end{minipage}
  \vspace{5mm}
+
+% La presencia en el sistema de
+ La segunda regla es mucho más costosa computacionalmente.}%
+ \only<2->{.
+ \vspace{5mm}
+
+ En general, se pueden sugerir los siguientes criterios:
+
+ \begin{itemize}
+ \item Anteponer los patrones más específicos,\\[2mm]
+ \hfill\parbox{.8\linewidth}
+       {\small como ilustra el ejemplo anterior.}
+ \vspace{3mm}
+
+ \item<3-> Posponer los patrones de \emph{facts} volátiles.\\[2mm]
+ \hfill\parbox{.8\linewidth}
+ {\small Con esto, se consigue reducir los cambios
+   frecuentes en las concordancias parciales con los
+   antecedentes de las reglas.}
+ \vspace{3mm}
+
+ \item<4-> Anteponer los patrones que se ajustan a pocos
+   \emph{facts}.
+ \end{itemize}
+ \vspace{4mm}}
+ \uncover<4>{
+ Se trata solo de indicaciones generales: estos criterios
+ pueden ser contradictorios.}
 \end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ En la guía del usuario de CLIPS, de \textsc{J. Giarratano},
+ leemos
+ \vspace{5mm}
+
+ \hfill\parbox{.85\linewidth}
+ {\it Now you might say, “Well, I’ll just design my expert
+   system so that only one rule can possibly be activated at
+   one time. Then there is no need for conflict
+   resolution”. [...]
+   \vspace{2mm}
+
+   The bad news is that this success proves that your
+   application can be well represented by a sequential
+   program.
+   \vspace{2mm}
+
+   So you should have coded it in C, Java, or Ada in the
+   first place and not bothered writing it as an expert
+   system.}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ Una {\bf estructura de control rígida} en un sistema
+ experto\\[2mm] \hfill\parbox{.85\linewidth}{(su diseño
+   establece muchas relaciones de prioridad de unas reglas
+   con respecto a otras),}
+ \vspace{1cm}
+
+ puede revelar un programa secuencial subyacente\\[2mm]
+ \hfill\parbox{.85\linewidth}{(y la conveniencia de
+   recurrir a la programación convencional).}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ \begin{itemize}
+ \item
+ El término «producción» se encuentra en el sistema de
+ reescritura de cadenas formalizado por {\sc E. Post}
+ [1943].
+ \vspace{3mm}
+
+ Las reglas de este sistema no se organizaban bajo ninguna
+ estructura de control o priorización.
+ \vspace{7mm}
+
+ \item
+ {\sc A. Markov Jr.} [1954] propuso un sistema de producción
+ con reglas jerarquizadas linealmente,
+ \vspace{3mm}
+
+ \hfill\parbox{.9\linewidth}{\small del mismo modo que
+   prioriza Prolog las distintas alternativas para
+   satisfacer un objetivo.}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{\emph{Salience}}
+
+ Una manera de decidir qué regla de la agenda ejecutar es\\[2mm] \hfill\parbox{.85\linewidth} {recurrir a una
+   prioridad explícita dada por el programador:}
+ \vspace{5mm}
+
+ \begin{minipage}{.5\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_salience.clp}
+ \end{minipage}
+ \vspace{5mm}
+
+ En CLIPS, las reglas tienen \emph{salience} \texttt{0} por
+ defecto.
+ \vspace{5mm}
+
+ En el ejemplo del cálculo numérico, hemos priorizado la
+ regla que termina el proceso.
+\end{frame}
+
+% \begin{frame}[t]
+%  \frametitle{Ejemplo\hfill{\fontspec{FreeSerif}Ⅳ}}
+
+%  \hspace{-1cm}
+%  \begin{minipage}[t]{.45\linewidth}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+%  \end{minipage}\hfill
+%  \begin{minipage}[t]{.55\linewidth}
+%  \trucavuelve
+%  \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+%                 frame=single]
+%    {\cod/01_numerico.txt}
+
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_ter.clp}
+%  \end{minipage}
+%  \vspace{5mm}
+% \end{frame}
+
+\begin{frame}[t]
+ \frametitle{\emph{Salience}}
+
+ Leemos en el libro \emph{Expert Systems. Principles and
+   Programming}, {\sc J. Giarratano} y {\sc G. Riley}
+ [p. 453]:
+ \vspace{5mm}
+
+ \only<1>{
+ \hfill\parbox{.85\linewidth}
+ {\it People who are just learning rule-based programming tend
+   to overuse salience because it gives them explicit
+   control of execution. It is more like the procedural
+   programming they are used to [...]
+  \vspace{3mm}
+
+  Overuse of salience results in a poorly coded program. The
+  main advantage of a rule-based system is that the
+  programmer does not have to worry about controlling
+  execution.}}
+
+ \only<2>{
+ \hfill\parbox{.85\linewidth} {\it Salience should primarily be
+   used as a mechanism for determining the order in which
+   rules fire. This means that in general a rule that is
+   placed on the agenda is eventually fired. Salience should
+   not be used as a method for selecting a single rule from
+   a group of rules when patterns can be used to express the
+   criteria for selection, nor should it be used as a “quick
+   fix” to get rules to fire in the proper order.}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Resolución de conflictos}
+
+ Si la agenda contiene varias reglas activadas con la misma
+ \emph{salience},
+ \hfill\parbox{.85\linewidth}
+ {CLIPS se decanta por una según el criterio seleccionado:}
+
+ \begin{itemize}
+ \item {\bf\color{naranja_muy}\texttt{depth}}
+
+ \begin{minipage}[t]{.6\linewidth}
+ %% Es el mecanismo de selección por defecto. El sistema «se
+ %% concentra» en lo que está haciendo.
+ Opción por defecto. El sistema «se
+ concentra» en lo que está haciendo.
+ \end{minipage}\hfill\vline\hfill
+ \begin{minipage}[t]{.35\linewidth}
+ \VerbatimInput[commandchars=\\\{\}]{\cod/01_strategy.txt}
+ \end{minipage}
+
+ \item {\bf\color{naranja_muy}\texttt{breadth}}
+
+ Todas las reglas tienen ocasión de intervenir.
+
+ \item {\bf\color{naranja_muy}\texttt{simplicity}}
+
+ \item {\bf\color{naranja_muy}\texttt{complexity}}
+
+ Se priorizan las reglas con antecedente más específico.
+
+ \item {\bf\color{naranja_muy} ···}
+
+ \item {\bf\color{naranja_muy}\texttt{random}}
+
+ Puede ser útil para detectar problemas en el sistema.
+
+ \end{itemize}
+
+ Otro criterio de elección atiende al
+ {\bf\color{naranja_muy} orden} en que están definidas las
+ reglas (como hace Prolog).
+\end{frame}
+
+% \begin{frame}[t]
+%  \frametitle{Resolución de conflictos\hfill\texttt{breadth}}
+
+%  \hspace{-1cm}
+%  \begin{minipage}[t]{.45\linewidth}
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico.clp}
+%  \end{minipage}\hfill
+%  \begin{minipage}[t]{.55\linewidth}
+%  \trucavuelve
+%  \VerbatimInput[commandchars=\\\{\}, fontsize=\small,
+%                 frame=single]
+%    {\cod/01_numerico_b.txt}
+
+%  \VerbatimInput[commandchars=\\\{\}]{\cod/01_numerico_quater.clp}
+%  \end{minipage}
+%  \vspace{5mm}
+% \end{frame}
 
 \begin{frame}
  \frametitle{Sistemas de producción}
