@@ -1,3 +1,3 @@
 README.md
 
-* Repositorio sobre programación estructurada
+* Repository on structured programming
