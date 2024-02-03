@@ -737,4 +737,9 @@
     (rule (grandson ?G ?S)
           (and (father ?S ?F)
                (father ?F ?G)))
+
+    ; New examples
+    (man Socrates) ; Assertion
+    (rule (mortal ?person)
+          (man ?person))
     ))
