@@ -16,18 +16,19 @@
              (+ low 1) 
              high))))
 
-(define (unique-triples n) ; Sequence of triples (i,j,k) with 1<=k<j<i<=n
+(define (unique-triples n) ; Sequence of triples (i,j,k) with 1<=i<j<k<=n
   (accumulate append
               empty
               (map (lambda (i) ; Here, instead of concatenating lambda functions, it is inserted the unique-pair structure, like inserting i to a pair (k,j)
                      (accumulate append
                                  empty
-                                 (map (lambda (j)
-                                        (map (lambda (k)
-                                               (list k j i))               
-                                                 (enumerate-interval 1 (- j 1))))
-                                      (enumerate-interval 1 (- i 1)))))      
-                     (enumerate-interval 1 n))))
+                                 (map
+                                  (lambda (j)
+                                    (map (lambda (k)
+                                           (list k j i))               
+                                         (enumerate-interval 1 (- j 1))))
+                                  (enumerate-interval 1 (- i 1)))))      
+                   (enumerate-interval 1 n))))
 
 (unique-triples 5) ; '((1 2 3) (1 2 4) (1 3 4) (2 3 4) (1 2 5) (1 3 5) (2 3 5) (1 4 5) (2 4 5) (3 4 5))
 

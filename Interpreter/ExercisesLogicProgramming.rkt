@@ -29,9 +29,10 @@
 
 ; b)
 
-(and (salary (Bitididdle Ben) ?amount)
-     (salary ?person ?amount2)
-     (lisp-value > ?amount ?amount2))
+(and (salary (Bitdiddle Ben) ?number) 
+              (salary ?person ?amount) 
+              (lisp-value < ?amount ?number)) 
+
 
 ; c)
 

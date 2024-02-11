@@ -13,10 +13,26 @@
 
 (define (square x) (* x x))
 
-(define (carmichael n)
-  (cond ((= n 0) (newline) (display "All numbers checked"))
-        ((= (expmod n-1 n n) n-1) (carmichael n-1))
-        (else (newline) (display "Not a Carmichael number"))))
-        
-      
-  
+(define (carmichael n)      
+  (define (try-it a)
+    (cond ((= a 0) (newline) (display n) (display " is a Carmichael number."))
+          ((= (expmod a n n) a) (try-it (- a 1)))
+          (else (newline) (display n) (display " is not a Carmichael number."))))
+  (try-it (- n 1)))
+
+(define (carmichael? n)
+  (define (try-it a)
+    (cond ((= a 0) true)
+          ((= (expmod a n n) a) (try-it (- a 1)))
+          (else false)))
+  (try-it (- n 1)))
+
+
+(carmichael 561)
+(carmichael 1105)
+(carmichael 1729)
+(carmichael 2465)
+(carmichael 2821)
+(carmichael 6601)
+
+

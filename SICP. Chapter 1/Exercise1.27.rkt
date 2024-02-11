@@ -20,11 +20,25 @@
           (else (newline) (display n) (display " is not a Carmichael number."))))
   (try-it (- n 1)))
 
+; Same, but implemented in a predicate form
+(define (carmichael? n)
+  (define (try-it a)
+    (cond ((= a 0) true)
+          ((= (expmod a n n) a) (try-it (- a 1)))
+          (else false)))
+  (try-it (- n 1)))
+
+
 (carmichael 561)
 (carmichael 1105)
 (carmichael 1729)
 (carmichael 2465)
 (carmichael 2821)
 (carmichael 6601)
+(carmichael 10585)
+(carmichael 15841)
+
+(carmichael? 561) ; #t
+(carmichael? 567) ; #f
 
 

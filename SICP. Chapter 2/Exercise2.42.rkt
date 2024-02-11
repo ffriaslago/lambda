@@ -509,9 +509,9 @@
 
 ; Final comprobation
 
-(length (queens 8)) ; 92! Great!
+;(length (queens 8)) ; 92! Great!
 
-(queens 8)
+;(queens 8)
 
 ;'(((4 8) (2 7) (7 6) (3 5) (6 4) (8 3) (5 2) (1 1))
 ;  ((5 8) (2 7) (4 6) (7 5) (3 4) (8 3) (6 2) (1 1))

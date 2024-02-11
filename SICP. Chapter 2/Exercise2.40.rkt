@@ -18,13 +18,13 @@
 
 (define (unique-pairs n) ; Sequence of pairs (i,j) with 1<=j<i<=n
   (accumulate append
-            empty
-            ; arguments of map, a procedure and a list. The procedure is the lambda function and the list is (enumerate-interval 1 n)
-            (map (lambda (i) 
-                   (map (lambda (j) 
-                          (list j i))
-                        (enumerate-interval 1 (- i 1)))) ; For every i, enumerate the integers j<i and create a pair (list i j)
-                 (enumerate-interval 1 n))))
+              empty
+              ; arguments of map, a procedure and a list. The procedure is the lambda function and the list is (enumerate-interval 1 n)
+              (map (lambda (i) 
+                     (map (lambda (j) 
+                            (list j i))
+                          (enumerate-interval 1 (- i 1)))) ; For every i, enumerate the integers j<i and create a pair (list i j)
+                   (enumerate-interval 1 n))))
 
 (unique-pairs 5) ; '((1 2) (1 3) (2 3) (1 4) (2 4) (3 4) (1 5) (2 5) (3 5) (4 5)). Great!
 
