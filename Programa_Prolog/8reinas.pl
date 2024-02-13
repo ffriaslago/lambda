@@ -5,8 +5,8 @@ valid_queen((Row, Col), N) :-
   between(1, N, Row).
 
 valid_board([], _).
-valid_board([Head|Tail], N) :- valid_queen(Head, N), valid_board(Tail, N).
-
+valid_board([Car|Cdr], N) :- valid_queen(Car, N), valid_board(Cdr, N).
+% En lenguaje scheme car y cdr
 rows([], []).
 rows([(Row, _)|QueensTail], [Row|RowsTail]) :-
   rows(QueensTail, RowsTail).
