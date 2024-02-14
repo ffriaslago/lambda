@@ -799,5 +799,5 @@
    
     ))
 
-; (init-data-base logic-programming-data-base)
-; (query-driver-loop)
+(init-data-base logic-programming-data-base)
+(query-driver-loop)
