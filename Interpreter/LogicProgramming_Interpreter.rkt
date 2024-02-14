@@ -105,10 +105,6 @@
   (newline) (newline)
   (display string) (newline))
 
-; Selection the proper environment
-
-(define user-initial-environment (scheme-report-environment 5))
-
 ; From Section 4.4.4 Implementing the Query System
 
 (define input-prompt  ";;; Query input:")
@@ -212,7 +208,7 @@
    frame-stream))
 
 (define (execute exp)
-  (apply (eval (predicate exp) user-initial-environment) ; Here it goes the name of the data-base we are interested in working with
+  (apply (eval (predicate exp) logic-programming-data-base) ; Here it goes the name of the data-base we are interested in working with
          (args exp)))
 
 (define (always-true ignore frame-stream) frame-stream)
@@ -536,7 +532,7 @@
 (define (extend variable value frame)
   (cons (make-binding variable value) frame))
 
-; Final procedure to initialize the data-base with all the assertions and rules
+; Final procedure to initialize the data-base with all the assertions and rules 
 
 (define (init-data-base rules-and-assertions) ; This will be called using the name of our data-base (defined below)
   
@@ -766,16 +762,28 @@
           (lastname (father ?person ?father) ?name))
     
     ; Example 3
-    (ingredient tallow soap)
-    (ingredient water potash)
-    (ingredient ashes potash)
-   
+    ;   (ingredient tallow soap)
+    ;   (ingredient water potash)
+    ;   (ingredient ashes potash)
+    ;   
+    ;   (rule (supply ?potash)
+    ;         (and (ingredient water ?potash)
+    ;              (ingredient ashes ?potash)))
+    ;   
+    ;   (rule (production ?soap)
+    ;         (and (ingredient tallow ?soap)
+    ;              (supply potash)))
+    ; 1. Facts
+    (ingredient tallow)
+    (ingredient water)
+    (ingredient ashes)
+    ; 2. Rules
     (rule (supply ?potash)
-          (and (ingredient water ?potash)
-               (ingredient ashes ?potash)))
+          (and (ingredient water)
+               (ingredient ashes)))
    
     (rule (production ?soap)
-          (and (ingredient tallow ?soap)
+          (and (ingredient tallow)
                (supply potash)))
 
     ; Example 4
@@ -783,35 +791,13 @@
     ;(transport taxi home)
     ;(transport walk home)
     ;(transport bike home)
-    (rule (reach ?home)
+    (rule (arrive ?home)
           (or (transport bus ?home)
               (transport taxi ?home)
               (transport bike ?home)
               (transport walk ?home)))
-
-    ; Simmetric relations
-    (adjacent 1 4)
-    (adjacent 2 4)
-    (adjacent 3 6)
-    (adjacent 4 5)
-    (adjacent 4 7)
-    (adjacent 5 7)
-    (adjacent 6 8)
-    (adjacent 6 9)
-    (adjacent 8 9)
-    (rule (adjacent ?x ?y)
-          (adjacent ?y ?x))
-    
-    ;(rule (adjacent ?x ?y)
-    ;      (and (lisp-value < ?y ?x)
-    ;           (adjacent ?y ?x)))
-
-    ;(rule (valid-queen ?queen ?n)
-    ;      (and (and (lisp-value <= 1 (cdr ?queen))
-    ;                (lisp-value >= ?n (cdr ?queen)))
-    ;           (and (lisp-value <= 1 (car ?queen))
-    ;                (lisp-value >= ?n (car ?queen)))))
-             
+   
     ))
 
-; (init-data-base logic-programming-data-base) (query-driver-loop)
+(init-data-base logic-programming-data-base)
+(query-driver-loop)
