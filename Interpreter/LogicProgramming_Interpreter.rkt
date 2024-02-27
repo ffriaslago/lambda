@@ -105,6 +105,10 @@
   (newline) (newline)
   (display string) (newline))
 
+; Selection the proper environment
+
+(define user-initial-environment (scheme-report-environment 5))
+
 ; From Section 4.4.4 Implementing the Query System
 
 (define input-prompt  ";;; Query input:")
@@ -208,7 +212,7 @@
    frame-stream))
 
 (define (execute exp)
-  (apply (eval (predicate exp) logic-programming-data-base) ; Here it goes the name of the data-base we are interested in working with
+  (apply (eval (predicate exp) user-initial-environment) ; Here it goes the name initial environment defined above
          (args exp)))
 
 (define (always-true ignore frame-stream) frame-stream)

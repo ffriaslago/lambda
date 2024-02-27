@@ -24,14 +24,18 @@
 ;
 ; a)
 
-(and (supervisor ?x (Bitididdle Ben))
+(and (supervisor ?x (Bitdiddle Ben))
      (address ?x ?y))
 
 ; b)
 
 (and (salary (Bitdiddle Ben) ?number) 
-              (salary ?person ?amount) 
-              (lisp-value < ?amount ?number)) 
+     (salary ?person ?amount) 
+     (lisp-value < ?amount ?number))
+
+(and (salary (Bitdiddle Ben) ?number) 
+     (salary ?person ?amount) 
+     (lisp-value < ?amount ?number)) 
 
 
 ; c)
@@ -134,9 +138,9 @@
 ; Exercise 4.64
 
 (rule (outranked-by ?staff-person ?boss)
-  (or (supervisor ?staff-person ?boss)
-      (and (outranked-by ?middle-manager ?boss)
-           (supervisor ?staff-person ?middle-manager))))
+      (or (supervisor ?staff-person ?boss)
+          (and (outranked-by ?middle-manager ?boss)
+               (supervisor ?staff-person ?middle-manager))))
 
 (outranked-by (Bitdiddle Ben) ?who)
 
